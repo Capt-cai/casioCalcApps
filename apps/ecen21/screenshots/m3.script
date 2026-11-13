@@ -1,0 +1,235 @@
+# M3 tool navigation, numeric operations, errors and settings.
+wait 500
+wait 200
+shot home.png
+1
+EXE
+F2
+EXE
+EXE
+F6
+F4
+wait 200
+shot boolean-before.png
+EXIT
+2
+wait 200
+shot numeric-start.png
+EXE
+wait 200
+shot carry-default.png
+EXIT
+1
+wait 200
+shot boolean-after.png
+EXIT
+2
+wait 200
+shot numeric-after.png
+F5
+AC
+1
+2
+DOWN
+AC
+3
+EXE
+wait 200
+shot manual-add.png
+F2
+EXE
+wait 200
+shot manual-sub.png
+F1
+wait 200
+shot manual-hex.png
+F1
+wait 200
+shot manual-bin.png
+F1
+EXE
+wait 200
+shot manual-sub-roundtrip.png
+OPTN
+1
+wait 200
+shot sample1-input.png
+EXE
+wait 200
+shot sample1-result.png
+OPTN
+2
+wait 200
+shot sample2-input.png
+EXE
+wait 200
+shot sample2-result.png
+OPTN
+3
+wait 200
+shot sample3-input.png
+EXE
+wait 200
+shot sample3-result.png
+OPTN
+4
+wait 200
+shot sample4-input.png
+EXE
+wait 200
+shot sample4-result.png
+OPTN
+5
+wait 200
+shot sample5-input.png
+EXE
+wait 200
+shot sample5-result.png
+OPTN
+6
+wait 200
+shot sample6-input.png
+EXE
+wait 200
+shot sample6-result.png
+OPTN
+7
+wait 200
+shot sample7-input.png
+EXE
+wait 200
+shot sample7-result.png
+OPTN
+8
+wait 200
+shot sample8-input.png
+EXE
+wait 200
+shot sample8-result.png
+OPTN
+8
+wait 200
+shot negative-dec.png
+F1
+wait 200
+shot negative-hex.png
+F1
+wait 200
+shot negative-bin.png
+F1
+wait 200
+shot negative-dec-roundtrip.png
+F3
+wait 200
+shot negative-unsigned.png
+OPTN
+8
+F1
+wait 200
+shot signed8-hex.png
+F4
+F2
+wait 200
+shot signed16-hex.png
+F4
+F3
+wait 200
+shot signed32-hex.png
+F4
+F1
+wait 200
+shot signed8-roundtrip.png
+F3
+F4
+F2
+wait 200
+shot unsigned16-hex.png
+F3
+F4
+F3
+F4
+F1
+wait 200
+shot truncated-input.png
+EXE
+wait 200
+shot truncated-result.png
+OPTN
+1
+AC
+EXE
+wait 200
+shot empty-error.png
+2
+5
+6
+wait 200
+shot range-error.png
+F5
+wait 200
+shot range-no-result.png
+F5
+DEL
+EXE
+wait 200
+shot range-repaired.png
+OPTN
+1
+F1
+F1
+AC
+2
+wait 200
+shot binary-digit-error.png
+F1
+wait 200
+shot blocked-base-change.png
+DEL
+1
+EXE
+wait 200
+shot binary-repaired.png
+OPTN
+1
+EXE
+wait 200
+shot carry-reset.png
+OPTN
+7
+AC
+NEG
+2
+1
+4
+7
+4
+8
+3
+6
+4
+8
+wait 200
+shot signed32-min-input.png
+F2
+EXE
+wait 200
+shot signed32-min-sub.png
+OPTN
+wait 200
+shot numeric-samples.png
+EXE
+wait 200
+shot numeric-sample-return.png
+EXIT
+wait 200
+shot home-after.png
+2
+wait 200
+shot numeric-reentered.png
+EXIT
+OPTN
+wait 200
+shot home-about.png
+EXE
+EXIT
+wait 300

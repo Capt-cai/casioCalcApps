@@ -1,0 +1,147 @@
+# M6 native waveform/event interactions, independent app launch.
+wait 500
+5
+wait 200
+shot timing-start.png
+F6
+wait 200
+shot master-wave.png
+RIGHT
+RIGHT
+wait 200
+shot master-open-data.png
+EXE
+wait 200
+shot master-event.png
+EXE
+wait 200
+shot master-precommit.png
+DOWN
+wait 200
+shot master-aftercommit.png
+F3
+RIGHT
+wait 200
+shot slave-transfer.png
+RIGHT
+RIGHT
+RIGHT
+RIGHT
+RIGHT
+wait 200
+shot master-time-page-two.png
+DOWN
+DOWN
+DOWN
+DOWN
+wait 200
+shot master-complement.png
+F4
+wait 200
+shot master-complement-table.png
+RIGHT
+RIGHT
+wait 200
+shot master-time-wrap.png
+OPTN
+2
+F6
+wait 200
+shot latch-rise-fall-wave.png
+RIGHT
+RIGHT
+F5
+wait 200
+shot review2-first-rise.png
+RIGHT
+RIGHT
+RIGHT
+RIGHT
+wait 200
+shot review2-first-fall.png
+RIGHT
+RIGHT
+RIGHT
+RIGHT
+RIGHT
+wait 200
+shot review2-second-rise.png
+RIGHT
+RIGHT
+RIGHT
+RIGHT
+wait 200
+shot review2-second-fall.png
+F3
+RIGHT
+wait 200
+shot review2-last-time-page.png
+DOWN
+DOWN
+DOWN
+DOWN
+wait 200
+shot review2-complements.png
+OPTN
+3
+F6
+wait 200
+shot ripple-wave.png
+RIGHT
+F5
+wait 200
+shot ripple-first-event.png
+EXE
+wait 200
+shot ripple-phase-zero.png
+DOWN
+wait 200
+shot ripple-phase-one.png
+DOWN
+wait 200
+shot ripple-phase-two.png
+DOWN
+wait 200
+shot ripple-phase-three.png
+F3
+LEFT
+LEFT
+wait 200
+shot ripple-final-wrap.png
+F4
+wait 200
+shot ripple-final-table.png
+OPTN
+1
+F6
+F2
+RIGHT
+1
+wait 200
+shot manual-event-editor.png
+F3
+wait 200
+shot event-edit-clears-wave.png
+F6
+RIGHT
+wait 200
+shot manual-input-before-edge.png
+F2
+F5
+wait 200
+shot appended-hold-event.png
+F6
+LEFT
+F4
+wait 200
+shot no-op-final-column.png
+F2
+DEL
+F6
+LEFT
+F4
+wait 200
+shot delete-restores-final-column.png
+EXIT
+EXIT
+wait 300

@@ -1,0 +1,104 @@
+# Shift,modulo and ring defaults/boundaries,code invalidation and exported variants.
+wait 500
+7
+F5
+7
+F6
+shot shift-code.png
+F3
+shot shift-priority-ports.png
+F4
+F6
+shot shift-exported.png
+F1
+EXE
+1
+EXE
+F6
+F1
+UP
+EXE
+1
+EXE
+F4
+F6
+shot shift-one-exported.png
+F5
+8
+F6
+shot modulo-code.png
+F3
+shot modulo-ports.png
+F4
+F6
+shot modulo-twelve-exported.png
+F1
+EXE
+1
+EXE
+F6
+shot modulo-width-error.png
+F2
+shot modulo-no-old-code.png
+F4
+shot modulo-no-export.png
+EXIT
+F1
+DOWN
+EXE
+1
+EXE
+F6
+shot modulo-one-code.png
+F1
+DOWN
+DOWN
+DOWN
+DOWN
+EXE
+1
+EXE
+F4
+F6
+shot modulo-one-exported.png
+F5
+9
+F6
+shot ring-code.png
+F4
+F6
+shot ring-exported.png
+F1
+EXE
+1
+EXE
+F6
+F1
+UP
+EXE
+1
+EXE
+F4
+F6
+shot ring-one-exported.png
+F1
+DOWN
+DOWN
+EXE
+3
+1
+EXE
+F6
+shot ring-seed-error.png
+F2
+shot ring-no-old-code.png
+F1
+EXE
+0
+EXE
+F6
+shot ring-seed-repaired.png
+F2
+EXIT
+EXIT
+wait 300

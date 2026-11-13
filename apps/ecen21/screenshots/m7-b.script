@@ -1,0 +1,120 @@
+# Ordinary encoder, seven-segment coding/polarity/policy/output and paging.
+wait 500
+6
+OPTN
+5
+F6
+F3
+shot encoder-four-equations.png
+F2
+shot encoder-zero.png
+DOWN
+shot encoder-one.png
+DOWN
+DOWN
+shot encoder-multiple.png
+F1
+EXE
+F6
+F2
+UP
+shot encoder-eight-last.png
+F1
+DOWN
+DOWN
+EXE
+1
+2
+8
+EXE
+F2
+shot encoder-input128.png
+F5
+shot encoder-valid-connections.png
+EXE
+EXE
+shot encoder-eight-verified.png
+F1
+UP
+EXE
+F6
+F2
+shot encoder-y1.png
+F1
+EXE
+F6
+F2
+shot encoder-y2.png
+OPTN
+6
+F6
+F2
+shot display-a-high-table.png
+RIGHT
+RIGHT
+shot display-invalid-zero.png
+F3
+shot display-a-equations.png
+F4
+shot display-a-map.png
+F5
+EXE
+shot display-a-mux-d0.png
+DOWN
+shot display-a-mux-d1.png
+EXE
+shot display-a-verified.png
+F1
+EXE
+F6
+F2
+shot display-low-zero-policy.png
+F1
+DOWN
+EXE
+F6
+F2
+shot display-low-blank-policy.png
+F1
+EXE
+F6
+F2
+shot display-low-dc-policy.png
+F5
+EXE
+EXE
+shot display-dc-verified.png
+F1
+DOWN
+EXE
+F6
+F2
+shot display-b-table.png
+F1
+EXE
+F6
+F2
+shot display-c-table.png
+F1
+EXE
+F6
+F2
+shot display-d-table.png
+F1
+EXE
+F6
+F2
+shot display-e-table.png
+F1
+EXE
+F6
+F2
+shot display-f-table.png
+F1
+EXE
+F6
+F2
+shot display-g-table.png
+EXIT
+EXIT
+wait 300

@@ -1,3 +1,22 @@
+# ECEN21 Toolkit — M8 engineering recovery checkpoint
+
+Native offline Casio fx-CG50 toolkit. Phase1 and originalM2A-M4 accepted;M5/M6
+hardware deferred;custom-width/M7/M8 user acceptance pending. All new features
+paused for P0 version-control protection;M9 has not started.
+
+- Current source/tests:[apps/ecen21](apps/ecen21/).
+- Actual user program:[M8 ECEN21.g3a](releases/engineering/M8/ECEN21.g3a),engineering
+  verified,not yet an accepted/stable release.
+- [Chinese M8 acceptance guide](docs/M8-USER-ACCEPTANCE.zh-CN.md).
+- [Recovered milestone index](version-archives/README.md),[hashes/status](version-archives/index.json).
+- [Version-control/recovery workflow](docs/VERSION-CONTROL.md),[actual test records](TESTING.md).
+- New clone:run `bash scripts/setup-git-workflow.sh`;source/binary integrity:
+  `python3 scripts/verify-version-archives.py`.
+
+The original casioCalcApps project,license and author credits follow unchanged.
+
+---
+
 <div align="center">
 
 # casioCalcApps

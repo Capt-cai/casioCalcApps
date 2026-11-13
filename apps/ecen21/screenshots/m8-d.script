@@ -1,0 +1,61 @@
+# Wider ring variant,modal boundaries/cancel and settings retention.
+wait 500
+7
+F5
+9
+EXE
+8
+EXE
+DOWN
+EXE
+2
+EXE
+DOWN
+EXE
+DOWN
+EXE
+DOWN
+EXE
+DOWN
+EXE
+DOWN
+EXE
+2
+EXE
+F6
+F3
+shot ring-right-async-low-ports.png
+F4
+F6
+shot ring-right-variant-exported.png
+F1
+DOWN
+shot before-width-number.png
+EXE
+0
+EXE
+shot zero-width-rejected.png
+AC
+3
+3
+EXE
+shot width33-rejected.png
+EXIT
+shot after-number-cancel.png
+F2
+shot before-slot-cancel.png
+F1
+UP
+EXE
+9
+9
+EXIT
+F2
+shot after-slot-cancel.png
+F4
+EXIT
+F2
+shot slot-export-cancel.png
+EXIT
+EXIT
+wait 300

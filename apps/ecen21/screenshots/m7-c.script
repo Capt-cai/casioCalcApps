@@ -1,0 +1,110 @@
+# Custom table/equation, don't-cares, selectors, help and tool retention.
+wait 500
+6
+OPTN
+4
+F6
+F2
+shot custom-default-table.png
+EXE
+EXE
+shot custom-dc-unsolved.png
+F3
+shot custom-no-old-equation.png
+F6
+F2
+shot custom-dc-completed.png
+F1
+EXE
+DOWN
+DOWN
+EXE
+AC
+XOT
+POWER
+LOG
+POWER
+LN
+EXE
+F6
+shot custom-xor-equation.png
+F5
+EXE
+shot custom-xor-mux.png
+F1
+DOWN
+DOWN
+DOWN
+DOWN
+DOWN
+EXE
+EXE
+F6
+shot duplicate-selector-error.png
+EXE
+F6
+shot selector-repaired.png
+F1
+UP
+UP
+UP
+UP
+UP
+EXE
+AC
+XOT
+PLUS
+EXE
+F6
+shot expression-error.png
+F5
+shot expression-no-old-connections.png
+F1
+EXE
+DEL
+EXE
+F6
+shot expression-repaired.png
+F1
+UP
+EXE
+F6
+F2
+shot custom-four-variable-table.png
+RIGHT
+RIGHT
+shot custom-four-variable-last.png
+F5
+DOWN
+shot custom-wires-page-two.png
+shot before-help.png
+OPTN
+9
+shot help.png
+EXE
+shot after-help.png
+OPTN
+EXIT
+shot after-menu-cancel.png
+EXIT
+2
+F4
+5
+EXE
+EXE
+shot binary-custom-width-regression.png
+EXIT
+5
+F6
+shot timing-regression.png
+EXIT
+6
+shot after-tool-switch.png
+EXIT
+DOWN
+UP
+EXE
+shot arrow-reentry.png
+EXIT
+EXIT
+wait 300

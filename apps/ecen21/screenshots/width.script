@@ -1,0 +1,109 @@
+# Custom width modal, exact boundaries, cancel and retained state.
+wait 500
+2
+EXE
+shot old-default.png
+F4
+shot width-dialog.png
+EXIT
+shot cancelled-result.png
+F4
+0
+EXE
+shot zero-rejected.png
+AC
+3
+3
+EXE
+shot thirtythree-rejected.png
+EXIT
+shot invalid-cancelled-result.png
+F4
+5
+EXE
+shot five-bit-truncated.png
+AC
+3
+1
+DOWN
+AC
+1
+EXE
+shot five-bit-carry.png
+F5
+AC
+3
+2
+EXE
+shot five-bit-range-error.png
+AC
+1
+5
+UP
+AC
+1
+5
+F3
+EXE
+shot five-bit-overflow.png
+F1
+shot five-bit-hex.png
+AC
+2
+0
+EXE
+shot partial-hex-range-error.png
+AC
+0
+F1
+AC
+1
+0
+0
+0
+0
+0
+EXE
+shot six-binary-digits-rejected.png
+AC
+1
+1
+1
+1
+1
+EXE
+shot five-bit-binary.png
+F4
+1
+EXE
+shot one-bit-input.png
+EXE
+shot one-bit-result.png
+F4
+3
+1
+EXE
+shot thirtyone-signed-extension.png
+F4
+F3
+EXE
+shot thirtytwo-signed-extension.png
+F4
+F1
+EXE
+shot eight-preset.png
+F4
+F2
+EXE
+shot sixteen-preset.png
+F4
+5
+EXE
+EXE
+shot before-home.png
+EXIT
+2
+shot after-home.png
+EXIT
+EXIT
+wait 300

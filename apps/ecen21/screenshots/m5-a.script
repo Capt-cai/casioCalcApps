@@ -1,0 +1,204 @@
+# M5 editable four-mode solver, tables/maps/traces/wiring, validation and regressions.
+wait 500
+shot home.png
+4
+wait 200
+shot setup-start.png
+F6
+wait 200
+shot t-state-first.png
+DOWN
+wait 200
+shot t-state-last.png
+UP
+F2
+wait 200
+shot t-excitation.png
+RIGHT
+wait 200
+shot t1-excitation.png
+F2
+wait 200
+shot outputs-unspecified.png
+F3
+wait 200
+shot t1-equation.png
+RIGHT
+wait 200
+shot t0-equation.png
+F4
+wait 200
+shot t0-map.png
+EXE
+wait 200
+shot t0-group.png
+DOWN
+wait 200
+shot t0-group-next.png
+MINUS
+wait 200
+shot t0-pos-group.png
+EXE
+wait 200
+shot t0-pos-map.png
+F5
+1
+wait 200
+shot t-trace.png
+F5
+3
+wait 200
+shot return-recovery-first.png
+DOWN
+wait 200
+shot return-recovery-last.png
+F5
+2
+wait 200
+shot t-wires-first.png
+DOWN
+wait 200
+shot t-wires-next.png
+OPTN
+1
+F1
+DOWN
+DOWN
+DOWN
+DOWN
+DOWN
+DOWN
+DOWN
+DOWN
+DOWN
+DOWN
+EXE
+AC
+0
+DP
+3
+DP
+5
+DP
+7
+DP
+0
+wait 200
+shot manual-cycle-editor.png
+EXE
+F6
+wait 200
+shot manual-cycle-state.png
+F1
+EXE
+AC
+0
+3
+0
+5
+EXE
+F6
+wait 200
+shot duplicate-error.png
+EXE
+F3
+wait 200
+shot no-stale-after-error.png
+F1
+EXE
+AC
+0
+3
+5
+7
+0
+EXE
+F6
+wait 200
+shot cycle-repaired.png
+F1
+EXE
+AC
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+wait 200
+shot cycle-capacity.png
+EXIT
+F2
+wait 200
+shot cancel-preserves-solution.png
+F1
+UP
+UP
+UP
+UP
+UP
+UP
+EXE
+F2
+wait 200
+shot policy-edit-invalidates.png
+F6
+wait 200
+shot hold-state.png
+F5
+3
+wait 200
+shot hold-traps.png
+F1
+EXE
+F6
+wait 200
+shot dc-sop-state.png
+MINUS
+wait 200
+shot dc-pos-state.png
+F5
+3
+wait 200
+shot dc-completion-warning.png
+PLUS
+F1
+EXE
+DOWN
+EXE
+F6
+wait 200
+shot return-one-state.png
+F5
+3
+wait 200
+shot return-one-traps.png
+EXIT
+EXIT
+wait 300

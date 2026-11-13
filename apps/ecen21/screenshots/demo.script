@@ -1,0 +1,55 @@
+# Milestone 2A: real input, calculation, edits, constants and navigation.
+wait 500
+shot start.png
+EXE
+wait 300
+shot demo-result.png
+F2
+EXE
+wait 300
+shot zero.png
+F3
+F6
+wait 300
+shot all.png
+AC
+EXE
+wait 300
+shot empty.png
+AC
+7
+COS
+EXE
+wait 300
+shot typed-result.png
+DEL
+wait 300
+shot edited.png
+EXE
+wait 300
+shot edited-result.png
+AC
+TAN
+TAN
+TAN
+TAN
+0
+EXE
+wait 300
+shot bounded.png
+AC
+6
+9
+9
+6
+EXE
+wait 300
+shot parity.png
+OPTN
+wait 300
+shot about.png
+EXE
+wait 300
+shot returned.png
+EXIT
+wait 300

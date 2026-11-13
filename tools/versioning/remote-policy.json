@@ -1,0 +1,9 @@
+{
+  "personal_remote": "origin",
+  "personal_repository": "Capt-cai/casioCalcApps",
+  "allowed_https_url": "https://github.com/Capt-cai/casioCalcApps.git",
+  "upstream_repository": "joserodpt/casioCalcApps",
+  "upstream_push_forbidden": true,
+  "automatic_push": "Verified personal origin only; current milestone branch and new engineering tags; fast-forward only. Main promotion requires explicit authorized scope.",
+  "accepted_release": "Only after explicit user physical acceptance for that precise version; never infer from engineering tests or next-stage authorization."
+}

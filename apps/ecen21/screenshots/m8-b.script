@@ -1,0 +1,93 @@
+# D/T/JK families, clock/reset options, native exported variants.
+wait 500
+7
+F5
+4
+F6
+shot D-code.png
+F3
+shot D-sync-ports.png
+F4
+F6
+shot D-exported.png
+F1
+EXE
+DOWN
+EXE
+DOWN
+EXE
+DOWN
+EXE
+F6
+F3
+shot D-falling-async-low-set.png
+F1
+DOWN
+EXE
+1
+EXE
+F4
+F6
+shot D-variant-exported.png
+F5
+5
+F6
+shot T-code.png
+F4
+F6
+shot T-exported.png
+F5
+6
+F6
+shot JK-code.png
+F3
+shot JK-ports.png
+F4
+F6
+shot JK-exported.png
+F1
+DOWN
+EXE
+EXE
+F6
+F3
+shot JK-no-reset-ports.png
+F1
+DOWN
+DOWN
+DOWN
+EXE
+1
+EXE
+F4
+F6
+shot JK-no-reset-exported.png
+F2
+shot before-help.png
+OPTN
+0
+shot help.png
+EXE
+shot after-help.png
+OPTN
+EXIT
+shot after-type-cancel.png
+EXIT
+2
+EXE
+shot numeric-regression.png
+EXIT
+6
+F6
+shot combinational-regression.png
+EXIT
+7
+shot after-tool-switch.png
+EXIT
+DOWN
+UP
+EXE
+shot arrow-reentry.png
+EXIT
+EXIT
+wait 300

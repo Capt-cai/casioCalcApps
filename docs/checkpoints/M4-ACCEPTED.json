@@ -1,0 +1,37 @@
+{
+  "checkpoint": "M4-accepted",
+  "recorded_at_utc": "2026-11-12T21:55:28Z",
+  "closed": true,
+  "engineering": "passed",
+  "user_acceptance": {
+    "status": "passed",
+    "source": "Explicit user report of real Casio fx-CG50 acceptance and formal closure",
+    "agent_operated_device": false,
+    "OS_version": "not provided",
+    "numeric_latency_and_peak_memory": "not measured/provided"
+  },
+  "next_milestone": "M5",
+  "M5_implementation_approved": false,
+  "artifact": {
+    "path": ".phase1/milestones/M4/artifacts/ECEN21.g3a",
+    "bytes": 93804,
+    "sha256": "165a5a2230b075352046e0f666b9b9d981d47b99c69af06443373fcadefcff6f"
+  },
+  "source_manifest": {
+    "path": ".phase1/milestones/M4/source-manifest.json",
+    "sha256": "ece0e661e0293eef3d188dc349c6d4c614a9bd778d5c23e15002da4a120dad3d",
+    "inputs": 77
+  },
+  "archive": {
+    "path": ".phase1/checkpoints/M4-accepted.tar.gz",
+    "bytes": 1296245,
+    "sha256": "50fbeaac9c4dacd9d8db8599c7ff4dfbf42bb293a47fdc363fef8bd43dedd530",
+    "member_manifest_path": ".phase1/milestones/M4/checkpoint-members.json",
+    "member_manifest_sha256": "88b662977c14614267da7e7a92871c7b9e2230097d5ea6db5f60f8b1010fc2a2",
+    "hashed_members": 299
+  },
+  "upstream_git_head": "12d6b4e1086746534636c3bb87703deeef5734a8",
+  "git_tag_created": false,
+  "remote_backup_created": false,
+  "original_engineering_reports_immutable": true
+}

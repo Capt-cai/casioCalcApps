@@ -1,0 +1,234 @@
+# M4 production flip-flop interactions; exact key names for pinned emulator.
+wait 500
+shot home.png
+3
+wait 200
+shot d-start.png
+1
+wait 200
+shot d-preview.png
+F5
+EXE
+wait 200
+shot d-falling-hold.png
+F5
+EXE
+wait 200
+shot d-none-hold.png
+F5
+EXE
+wait 200
+shot d-capture.png
+F3
+EXE
+wait 200
+shot d-rise-ignored.png
+1
+F5
+EXE
+wait 200
+shot d-fall-capture.png
+F4
+0
+F3
+F5
+F5
+F4
+1
+wait 200
+shot reset-one.png
+F4
+wait 200
+shot reset-prompt.png
+EXIT
+wait 200
+shot reset-cancel.png
+F2
+wait 200
+shot d-characteristic.png
+DOWN
+F2
+wait 200
+shot d-excitation.png
+F2
+wait 200
+shot d-history-empty.png
+F2
+F1
+F4
+0
+1
+2
+wait 200
+shot jk-preview.png
+EXE
+wait 200
+shot jk-toggle-one.png
+EXE
+wait 200
+shot jk-toggle-zero.png
+F2
+wait 200
+shot jk-characteristic.png
+F2
+wait 200
+shot jk-excitation.png
+DOWN
+DOWN
+F2
+wait 200
+shot jk-history.png
+F2
+F1
+1
+EXE
+wait 200
+shot t-one.png
+1
+EXE
+wait 200
+shot t-hold.png
+1
+EXE
+wait 200
+shot t-zero.png
+F3
+EXE
+wait 200
+shot t-wrong-edge.png
+F5
+EXE
+wait 200
+shot t-fall-toggle.png
+F2
+wait 200
+shot t-characteristic.png
+F2
+wait 200
+shot t-excitation.png
+F2
+wait 200
+shot t-history.png
+F2
+F1
+F3
+1
+EXE
+wait 200
+shot sr-set.png
+1
+2
+EXE
+wait 200
+shot sr-reset.png
+1
+wait 200
+shot sr-invalid-preview.png
+F5
+EXE
+wait 200
+shot sr-11-wrong-edge-hold.png
+F5
+EXE
+wait 200
+shot sr-11-no-event-hold.png
+F5
+EXE
+wait 200
+shot sr-invalid.png
+1
+EXE
+wait 200
+shot sr-locked.png
+F2
+wait 200
+shot sr-characteristic.png
+F2
+wait 200
+shot sr-excitation.png
+F2
+wait 200
+shot sr-history-invalid.png
+F2
+F4
+0
+EXE
+wait 200
+shot sr-recovered.png
+F4
+0
+2
+EXE
+EXE
+EXE
+EXE
+EXE
+EXE
+EXE
+EXE
+EXE
+EXE
+EXE
+EXE
+EXE
+EXE
+EXE
+EXE
+wait 200
+shot sixteen-steps.png
+EXE
+wait 200
+shot history-full.png
+F2
+F2
+F2
+wait 200
+shot history-page-one.png
+UP
+wait 200
+shot history-page-three.png
+UP
+UP
+wait 200
+shot history-page-two.png
+F2
+wait 200
+shot before-switch.png
+EXIT
+1
+wait 200
+shot boolean-reentry.png
+EXIT
+2
+EXE
+wait 200
+shot numeric-reentry.png
+EXIT
+3
+wait 200
+shot after-switch.png
+OPTN
+wait 200
+shot help.png
+EXE
+wait 200
+shot help-return.png
+F4
+0
+wait 200
+shot reset-after-full.png
+EXE
+wait 200
+shot after-full-step.png
+F1
+wait 200
+shot type-clears-history.png
+EXIT
+DOWN
+UP
+EXE
+wait 200
+shot arrow-enters-flip.png
+EXIT
+EXIT
+wait 300

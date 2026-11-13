@@ -1,0 +1,263 @@
+# M2B production smoke: source preservation, exact forms, Gray map and group steps.
+wait 500
+wait 200
+shot start.png
+EXE
+wait 200
+shot default-sop.png
+F4
+wait 200
+shot default-pos.png
+F5
+wait 200
+shot default-pos-group1.png
+DOWN
+wait 200
+shot default-pos-group2.png
+F5
+wait 200
+shot default-pos-map.png
+F2
+wait 200
+shot default-table.png
+EXE
+wait 200
+shot manual-one.png
+EXE
+wait 200
+shot manual-x.png
+F3
+wait 200
+shot manual-x-map-dirty.png
+F6
+wait 200
+shot manual-x-map-solved.png
+F4
+F4
+wait 200
+shot manual-x-sop.png
+F1
+wait 200
+shot saved-expression-inactive.png
+F2
+wait 200
+shot manual-roundtrip.png
+F1
+F5
+EXE
+wait 200
+shot restored-expression-sop.png
+F1
+AC
+wait 200
+shot empty-editor.png
+XOT
+PLUS
+F6
+wait 200
+shot syntax-error.png
+F2
+wait 200
+shot invalid-table.png
+F3
+wait 200
+shot invalid-map.png
+F1
+LOG
+EXE
+wait 200
+shot repaired-expression.png
+F1
+AC
+XOT
+MULT
+LOG
+PLUS
+LN
+EXE
+wait 200
+shot typed-equivalent-sop.png
+F1
+LEFT
+DEL
+POWER
+wait 200
+shot cursor-edit.png
+EXE
+wait 200
+shot cursor-result.png
+F1
+AC
+DIV
+LPAR
+XOT
+PLUS
+LOG
+RPAR
+LN
+POWER
+SIN
+DP
+EXE
+wait 200
+shot typed-operators.png
+OPTN
+2
+EXE
+wait 200
+shot counterexample-sop.png
+F5
+wait 200
+shot counterexample-group1.png
+F3
+PLUS
+wait 200
+shot counterexample-map-group2.png
+F5
+wait 200
+shot counterexample-group2.png
+F4
+F4
+wait 200
+shot counterexample-pos.png
+OPTN
+3
+wait 200
+shot dc-table.png
+F6
+F4
+wait 200
+shot dc-sop.png
+F4
+wait 200
+shot dc-pos.png
+F3
+wait 200
+shot dc-map.png
+EXE
+F6
+F4
+F4
+wait 200
+shot dc-removed-sop.png
+F3
+EXE
+EXE
+F6
+F4
+wait 200
+shot dc-restored-sop.png
+F2
+F5
+wait 200
+shot vars-three.png
+F5
+wait 200
+shot vars-four.png
+F5
+F6
+F4
+wait 200
+shot vars-roundtrip-sop.png
+OPTN
+1
+F2
+F5
+F1
+wait 200
+shot variable-range-error.png
+F2
+F5
+F6
+F4
+wait 200
+shot three-var-expression.png
+F3
+wait 200
+shot three-var-map.png
+OPTN
+5
+F2
+F5
+EXE
+EXE
+DOWN
+EXE
+EXE
+DOWN
+EXE
+EXE
+DOWN
+EXE
+EXE
+F6
+F4
+wait 200
+shot all-dc-sop.png
+F4
+wait 200
+shot all-dc-pos.png
+F5
+wait 200
+shot all-dc-groups.png
+F3
+wait 200
+shot all-dc-map.png
+OPTN
+5
+F6
+wait 200
+shot zero-sop.png
+F5
+wait 200
+shot zero-groups.png
+OPTN
+6
+F6
+wait 200
+shot one-sop.png
+F3
+wait 200
+shot one-map.png
+F4
+F4
+wait 200
+shot one-pos.png
+OPTN
+4
+EXE
+wait 200
+shot parity-sop.png
+DOWN
+wait 200
+shot parity-page-wrap.png
+F5
+wait 200
+shot parity-group-first.png
+DOWN
+DOWN
+DOWN
+DOWN
+DOWN
+DOWN
+DOWN
+wait 200
+shot parity-group-last.png
+DOWN
+wait 200
+shot parity-group-wrap.png
+F5
+wait 200
+shot parity-map.png
+F4
+F4
+wait 200
+shot parity-pos.png
+OPTN
+wait 200
+shot help.png
+EXE
+wait 200
+shot help-return.png
+EXIT
+wait 300

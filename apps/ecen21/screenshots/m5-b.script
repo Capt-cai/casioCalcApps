@@ -1,0 +1,159 @@
+# Independent M5 scenarios, new app launch
+wait 500
+4
+OPTN
+2
+F6
+wait 200
+shot jk-state.png
+F5
+1
+wait 200
+shot jk-trace-first.png
+DOWN
+wait 200
+shot jk-trace-last.png
+F2
+F2
+RIGHT
+RIGHT
+RIGHT
+RIGHT
+RIGHT
+wait 200
+shot jk-last-pin-excitation.png
+F3
+wait 200
+shot jk-last-pin-equation.png
+F5
+2
+wait 200
+shot jk-wires.png
+UP
+wait 200
+shot jk-wires-last.png
+OPTN
+3
+F6
+wait 200
+shot mixed-state.png
+F2
+wait 200
+shot mixed-d2-excitation.png
+RIGHT
+wait 200
+shot mixed-t1-excitation.png
+RIGHT
+wait 200
+shot mixed-j0-excitation.png
+RIGHT
+wait 200
+shot mixed-k0-excitation.png
+F5
+1
+wait 200
+shot mixed-trace-first.png
+DOWN
+wait 200
+shot mixed-trace-last.png
+OPTN
+4
+F6
+wait 200
+shot controlled-state-first.png
+DOWN
+wait 200
+shot controlled-state-last.png
+F3
+wait 200
+shot controlled-t1-equation.png
+RIGHT
+wait 200
+shot controlled-t0-equation.png
+F5
+2
+wait 200
+shot controlled-wires-first.png
+DOWN
+wait 200
+shot controlled-wires-parity.png
+DOWN
+wait 200
+shot controlled-wires-pins.png
+F5
+1
+wait 200
+shot controlled-e0-trace.png
+F1
+DOWN
+DOWN
+DOWN
+DOWN
+DOWN
+DOWN
+DOWN
+EXE
+F6
+F5
+1
+wait 200
+shot controlled-e1-trace.png
+OPTN
+4
+UP
+EXE
+0
+1
+0
+1
+EXE
+F6
+F5
+1
+wait 200
+shot controlled-timeline.png
+F1
+EXE
+AC
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+EXE
+F6
+F5
+1
+UP
+wait 200
+shot timeline32-last-page.png
+EXIT
+EXIT
+wait 300

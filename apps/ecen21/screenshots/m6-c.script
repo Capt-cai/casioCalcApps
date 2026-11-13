@@ -1,0 +1,190 @@
+# M6 native waveform/event interactions, independent app launch.
+wait 500
+5
+OPTN
+7
+F6
+RIGHT
+RIGHT
+RIGHT
+RIGHT
+RIGHT
+wait 200
+shot sr-unknown-wave.png
+F5
+wait 200
+shot sr-unknown-explanation.png
+RIGHT
+RIGHT
+RIGHT
+wait 200
+shot sr-known-clear-d-unknown.png
+RIGHT
+RIGHT
+RIGHT
+wait 200
+shot sr-d-known-recovery.png
+OPTN
+8
+F6
+RIGHT
+RIGHT
+RIGHT
+wait 200
+shot sr-latch-invalid-wave.png
+RIGHT
+F5
+wait 200
+shot sr-latch-clear-recovery.png
+OPTN
+2
+F6
+F1
+RIGHT
+RIGHT
+DOWN
+DOWN
+EXE
+EXE
+wait 200
+shot initial-unknown-setting.png
+F6
+wait 200
+shot initial-unknown-wave.png
+RIGHT
+RIGHT
+wait 200
+shot initial-unknown-resolved.png
+OPTN
+9
+F6
+wait 200
+shot nonconvergence-error.png
+EXE
+F3
+wait 200
+shot nonconvergence-no-old-wave.png
+OPTN
+1
+F6
+wait 200
+shot recovered-after-oscillator.png
+F1
+RIGHT
+RIGHT
+RIGHT
+RIGHT
+RIGHT
+DOWN
+DOWN
+EXE
+EXE
+EXE
+F6
+wait 200
+shot gate-cycle-error.png
+EXE
+F3
+wait 200
+shot gate-cycle-no-old-wave.png
+OPTN
+0
+F6
+wait 200
+shot max64-wave.png
+LEFT
+wait 200
+shot max64-last-column.png
+F4
+wait 200
+shot max64-last-table.png
+F2
+F5
+wait 200
+shot event65-rejected.png
+UP
+wait 200
+shot max64-event-last-page.png
+DEL
+F3
+wait 200
+shot delete-clears-result.png
+F6
+F2
+AC
+wait 200
+shot empty-event-editor.png
+F6
+F4
+wait 200
+shot initial-only-table.png
+F2
+F5
+1
+wait 200
+shot new-first-event.png
+F6
+RIGHT
+F5
+wait 200
+shot custom-first-rise.png
+OPTN
+1
+F6
+RIGHT
+RIGHT
+RIGHT
+RIGHT
+RIGHT
+RIGHT
+RIGHT
+RIGHT
+wait 200
+shot before-tool-switch.png
+EXIT
+4
+F6
+F5
+1
+wait 200
+shot m5-regression.png
+EXIT
+1
+EXE
+wait 200
+shot boolean-regression.png
+EXIT
+2
+EXE
+wait 200
+shot numeric-regression.png
+EXIT
+3
+wait 200
+shot ff-regression.png
+EXIT
+5
+wait 200
+shot after-tool-switch.png
+OPTN
+EXE
+wait 200
+shot help.png
+EXE
+wait 200
+shot after-help.png
+OPTN
+wait 200
+shot samples.png
+EXIT
+wait 200
+shot after-sample-cancel.png
+EXIT
+DOWN
+UP
+EXE
+wait 200
+shot arrow-reentry.png
+EXIT
+EXIT
+wait 300

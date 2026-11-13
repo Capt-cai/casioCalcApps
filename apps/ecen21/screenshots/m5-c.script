@@ -1,0 +1,283 @@
+# Independent M5 scenarios, new app launch
+wait 500
+4
+OPTN
+5
+F6
+wait 200
+shot reverse-state.png
+F2
+wait 200
+shot reverse-excitation.png
+F2
+wait 200
+shot reverse-output.png
+F3
+wait 200
+shot reverse-equation.png
+F5
+1
+wait 200
+shot reverse-trace.png
+F5
+2
+wait 200
+shot reverse-wires.png
+F1
+DOWN
+DOWN
+DOWN
+DOWN
+DOWN
+DOWN
+DOWN
+DOWN
+DOWN
+EXE
+wait 200
+shot reverse-original-editor.png
+AC
+LOG
+PLUS
+EXE
+F6
+wait 200
+shot reverse-syntax-error.png
+EXE
+F1
+EXE
+AC
+LOG
+PLUS
+DIV
+XOT
+EXE
+F6
+wait 200
+shot reverse-repaired.png
+F1
+EXE
+AC
+EXE
+F6
+wait 200
+shot reverse-missing-error.png
+EXE
+F1
+EXE
+AC
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+DIV
+XOT
+EXE
+F6
+wait 200
+shot reverse-max79-result.png
+OPTN
+6
+F6
+wait 200
+shot max-domain-first.png
+DOWN
+wait 200
+shot max-domain-middle.png
+DOWN
+wait 200
+shot max-domain-last.png
+F3
+wait 200
+shot max-domain-equation.png
+F4
+wait 200
+shot max-domain-map.png
+MINUS
+wait 200
+shot max-domain-pos-map.png
+F5
+1
+wait 200
+shot max-domain-timeline-first.png
+DOWN
+wait 200
+shot max-domain-timeline-last.png
+F5
+3
+DOWN
+wait 200
+shot max-domain-recovery.png
+F5
+2
+UP
+wait 200
+shot max-domain-wires-last.png
+OPTN
+7
+F6
+wait 200
+shot swap-state.png
+F5
+1
+wait 200
+shot swap-trace.png
+F1
+DOWN
+DOWN
+DOWN
+EXE
+F6
+F5
+1
+wait 200
+shot swap-falling-trace.png
+OPTN
+8
+F6
+wait 200
+shot invalid-sr-table.png
+F2
+wait 200
+shot invalid-sr-input.png
+F5
+1
+wait 200
+shot invalid-sr-trace.png
+F5
+3
+wait 200
+shot invalid-sr-recovery.png
+OPTN
+3
+F6
+F5
+1
+wait 200
+shot before-tool-switch.png
+EXIT
+1
+EXE
+wait 200
+shot boolean-regression.png
+EXIT
+2
+EXE
+wait 200
+shot numeric-regression.png
+EXIT
+3
+wait 200
+shot flipflop-regression.png
+EXIT
+4
+wait 200
+shot after-tool-switch.png
+DOWN
+wait 200
+shot trace-page-two-before-menu.png
+F5
+5
+EXE
+wait 200
+shot trace-page-two-after-help.png
+F5
+EXIT
+wait 200
+shot trace-page-two-after-menu-cancel.png
+UP
+F5
+5
+wait 200
+shot help.png
+EXE
+wait 200
+shot after-help.png
+OPTN
+wait 200
+shot samples.png
+EXE
+wait 200
+shot after-sample-cancel.png
+EXIT
+DOWN
+UP
+EXE
+wait 200
+shot arrow-reentry.png
+EXIT
+EXIT
+wait 300

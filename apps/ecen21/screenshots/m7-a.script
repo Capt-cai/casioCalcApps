@@ -1,0 +1,106 @@
+# Adder families, P4.12 two MUXes, ripple stages and bounded errors.
+wait 500
+shot home.png
+6
+shot fa-setup.png
+F6
+shot fa-sum-equation.png
+F2
+shot fa-table-first.png
+RIGHT
+shot fa-table-last.png
+F4
+shot fa-sum-map.png
+F5
+shot fa-connections-first.png
+EXE
+shot fa-sum-d0.png
+DOWN
+shot fa-sum-d1.png
+DOWN
+shot fa-sum-d2.png
+DOWN
+shot fa-sum-d3.png
+EXE
+shot fa-sum-verified.png
+F1
+EXE
+F6
+shot fa-carry-equation.png
+F5
+EXE
+shot fa-carry-d0.png
+DOWN
+shot fa-carry-d1.png
+DOWN
+shot fa-carry-d2.png
+DOWN
+shot fa-carry-d3.png
+F1
+DOWN
+EXE
+F6
+shot fa-carry-pos.png
+F4
+shot fa-carry-pos-map.png
+OPTN
+1
+F6
+F2
+shot half-adder-table.png
+F5
+EXE
+EXE
+shot half-adder-verified.png
+OPTN
+3
+F6
+F2
+shot popcount-low-table.png
+F1
+EXE
+F6
+F2
+shot popcount-high-table.png
+OPTN
+7
+EXE
+8
+EXE
+DOWN
+EXE
+2
+5
+5
+EXE
+F6
+F2
+shot ripple-eight-first.png
+DOWN
+shot ripple-eight-last.png
+F5
+shot ripple-wire-first.png
+DOWN
+shot ripple-wire-last.png
+F3
+shot ripple-fa-equations.png
+F1
+UP
+EXE
+3
+EXE
+F6
+shot ripple-range-error.png
+F5
+shot ripple-no-old-connections.png
+F1
+DOWN
+EXE
+7
+EXE
+F6
+F2
+shot ripple-three-repaired.png
+EXIT
+EXIT
+wait 300

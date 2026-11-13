@@ -6,3 +6,22 @@ apps/*/*.g3a
 __pycache__/
 .DS_Store
 storage/
+.phase1/
+
+# Local secrets and generated caches. Sources/scripts/docs remain trackable.
+.env
+.env.*
+!.env.example
+!.env.sample
+*.pem
+*.key
+*.p12
+*.pfx
+*.pyc
+*.o
+*.su
+*.vvp
+*.dSYM/
+build/
+# Curated recovery archives and published engineering artifacts are intentional.
+# .phase1 stays local; version-archives/ and releases/ are the remote-safe mirrors.

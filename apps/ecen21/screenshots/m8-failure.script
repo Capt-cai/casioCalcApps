@@ -1,0 +1,10 @@
+wait 500
+7
+F6
+F4
+F6
+shot storage-create-failed.png
+F2
+EXIT
+EXIT
+wait 300
