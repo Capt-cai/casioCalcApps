@@ -1,0 +1,2 @@
+# PDF containers may be ASCII-encoded but must not receive text conversions.
+*.pdf binary
