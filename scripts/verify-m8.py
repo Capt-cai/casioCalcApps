@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Verify M8 native code/export plus previous engineering/accepted tools."""
 from pathlib import Path
+import os
 import hashlib
 import json
 import re
@@ -9,7 +10,7 @@ import subprocess
 from PIL import Image, ImageChops
 
 root = Path(__file__).resolve().parents[1]
-work = root / ".phase1/ecen21-m8"
+work = Path(os.environ.get("ECEN21_M8_WORK",str(root / ".phase1/ecen21-m8")))
 out = work / "verification"
 emulator = root / ".phase1/emulator-build/emucasiocalc"
 revision = subprocess.check_output(["git", "-C", str(root / ".phase1/vendor/emuCasioCalc"),
@@ -49,7 +50,7 @@ benchmark_script = benchmark / "budget.script"
 benchmark_script.write_text("wait 120000\nEXE\n")
 benchmark_log = run("EC21Bench.g3a", benchmark, ("--script", str(benchmark_script)))
 benchmark_report = (benchmark / "storage/fls0/M8BENCH.txt").read_text()
-if not re.fullmatch(r"PASS: M8 maximum families; 36 configs; peak bytes \d+; peak visual lines \d+\n\n?", benchmark_report):
+if not re.fullmatch(r"PASS: M8 maximum families; 40 configs; peak bytes \d+; peak visual lines \d+\n\n?", benchmark_report):
     raise RuntimeError("Maximum-domain benchmark validation failed: " + benchmark_report)
 benchmark_instructions = int(re.search(r"add-in exited after (\d+) instructions", benchmark_log).group(1))
 
@@ -296,12 +297,14 @@ for part in "abcd":
     if set(images)&set(more):raise RuntimeError("Duplicate M8 screenshot names")
     images.update(more);hdl_logs.append(log)
 hdl_checks={
-    "code_next_page_differs":not same("behavioral-code-first","behavioral-code-next"),
+    "compact_behavioral_fits_one_page":same("behavioral-code-first","behavioral-code-next"),
     "code_page_roundtrip":same("behavioral-code-first","behavioral-code-return"),
-    "code_last_page_accessible":not same("behavioral-code-first","behavioral-code-last"),
+    "compact_behavioral_wraps_to_same_page":same("behavioral-code-first","behavioral-code-last"),
     "export_cancel_preserves_code":same("before-export-cancel","after-export-cancel"),
     "width_edit_invalidates_code":not same("one-bit-adder-code","width-edit-clears-code"),
     "file_conflict_visible":not same("behavioral-exported","existing-file-protected"),
+    "model_edit_invalidates_code":not same("dataflow-code","model-edit-clears-code"),
+    "structural_code_pages_differ":not same("structural-code","structural-primitive-page"),
     "encoder_edit_invalidates_code":not same("encoder-ports","encoder-edit-clears-code"),
     "FF_reset_options_change_contract":not same("D-sync-ports","D-falling-async-low-set"),
     "help_retains_code":same("before-help","after-help"),

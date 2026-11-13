@@ -43,6 +43,20 @@ F4
 F6
 shot one-bit-adder-exported.png
 F5
+1
+DOWN
+DOWN
+EXE
+F2
+shot model-edit-clears-code.png
+F6
+shot dataflow-code.png
+F3
+shot dataflow-ports.png
+F4
+F6
+shot dataflow-exported.png
+F5
 2
 F6
 shot structural-code.png

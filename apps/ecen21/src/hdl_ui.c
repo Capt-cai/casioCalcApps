@@ -11,32 +11,33 @@
 #define ACCENT C_RGB(2,12,17)
 #define HI C_RGB(26,29,31)
 enum { SET,CODE,PORTS,EXPORT };
-enum { WIDTH,INPUTS,MODULUS,SEED,DIRECTION,EDGE,RESET,POLARITY,VALUE,SLOT };
+enum { WIDTH,INPUTS,MODULUS,SEED,DIRECTION,EDGE,RESET,POLARITY,VALUE,SLOT,MODEL };
 static hg_config config;
 static hg_document document;
 static unsigned view,field,page,export_return;
 static bool export_attempted;
 static hx_result export_result;
 static char notice[64];
-static bool sequential(void) { return config.kind>=HG_D; }
+static bool sequential(void) { return config.kind>=HG_D&&config.kind<=HG_RING; }
 static void dirty(void)
 { document.valid=false;document.length=0;document.code[0]=0;document.error[0]=0;page=0;notice[0]=0;export_attempted=false; }
 static unsigned properties(unsigned out[10])
 {
     unsigned n=0;
-    if(config.kind<=HG_STRUCTURAL||config.kind>=HG_SHIFT)out[n++]=WIDTH;
+    if(hg_is_adder(config.kind)||(config.kind>=HG_SHIFT&&config.kind<=HG_RING))out[n++]=WIDTH;
     if(config.kind==HG_ENCODER)out[n++]=INPUTS;
     if(config.kind==HG_MODULO)out[n++]=MODULUS;
     if(config.kind==HG_RING){out[n++]=SEED;out[n++]=DIRECTION;}
     if(sequential()){out[n++]=EDGE;out[n++]=RESET;out[n++]=POLARITY;}
     if(config.kind>=HG_D&&config.kind<=HG_JK)out[n++]=VALUE;
-    out[n++]=SLOT;return n;
+    out[n++]=SLOT;if(hg_is_adder(config.kind))out[n++]=MODEL;return n;
 }
 static const char *reset_name(void)
 { return config.reset==HG_NO_RESET?"NONE":config.reset==HG_SYNC_RESET?"SYNC":"ASYNC"; }
 static void setting(unsigned p,char *out,size_t cap)
 {
     switch(p) {
+    case MODEL:snprintf(out,cap,"Model: %s",config.kind==HG_BEHAVIORAL?"BEHAVIORAL":config.kind==HG_DATAFLOW?"DATAFLOW":"STRUCTURAL");break;
     case WIDTH:snprintf(out,cap,"Width: %u (1..32)",config.width);break;
     case INPUTS:snprintf(out,cap,"Ordinary encoder: %u inputs",config.inputs);break;
     case MODULUS:snprintf(out,cap,"Modulus: %u (min width%u)",config.modulus,hg_min_width(config.modulus));break;
@@ -74,6 +75,7 @@ static void edit(void)
 {
     unsigned fields[10],n=properties(fields);if(field>=n)field=0;
     unsigned p=fields[field];bool changed=true;
+    if(p==MODEL)config.kind=config.kind==HG_BEHAVIORAL?HG_DATAFLOW:config.kind==HG_DATAFLOW?HG_STRUCTURAL:HG_BEHAVIORAL;
     if(p==WIDTH)changed=number(&config.width,1,32);
     if(p==INPUTS)config.inputs=config.inputs==4?8:4;
     if(p==MODULUS)changed=number(&config.modulus,1,65535);
@@ -111,17 +113,17 @@ static void code(void)
 static void ports(void)
 {
     dprint(10,45,ACCENT,"module %s",hg_module(config.kind));
-    if(config.kind<=HG_STRUCTURAL) {
+    if(hg_is_adder(config.kind)) {
         dtext(10,72,C_BLACK,"a,b: WIDTH-bit inputs; cin: carry input");
         dtext(10,96,C_BLACK,"sum: WIDTH bits; cout: final carry");
-        dtext(10,120,C_DARK,"Bit0=LSB; structural file includes FA cell.");
-        dtext(10,147,C_DARK,"WIDTH parameter can be overridden1..32.");
+        dtext(10,120,C_DARK,"Bit0=LSB; STRUCTURAL uses gate-level FA cells.");
+        dtext(10,147,C_DARK,"Fixed width; SET Model chooses all 3 styles.");
     }
     else if(config.kind==HG_ENCODER) {
         dtext(10,72,C_BLACK,"in: I[n-1]..I0; code: OR of active indices");
         dtext(10,96,C_BLACK,"valid: exactly one active input");
         dtext(10,120,C_RED,"Use code only when valid=1; no priority.");
-        dtext(10,147,C_DARK,"INPUTS parameter4or8; actual invalid code shown.");
+        dtext(10,147,C_DARK,"Fixed 4/8 inputs; invalid code still shown.");
     }
     else {
         dprint(10,70,C_BLACK,"clk:%s | rst:%s %s",config.falling?"falling":"rising",reset_name(),config.reset_high?"high":"low");
@@ -129,7 +131,7 @@ static void ports(void)
         if(config.kind==HG_T)dtext(10,96,C_BLACK,"t=0 hold; t=1 toggles q");
         if(config.kind==HG_JK)dtext(10,96,C_BLACK,"jk00 hold,01 clear,10 set,11 toggle");
         if(config.kind==HG_SHIFT){dtext(10,96,C_BLACK,"Reset > load > shift_right > shift_left > hold");dtext(10,119,C_BLACK,"Right inserts serial_left at MSB; left at LSB.");}
-        if(config.kind==HG_MODULO){dtext(10,96,C_BLACK,"enable=0 hold; q wraps/recover at MODULUS");dtext(10,119,C_DARK,"WIDTH auto+EXTRA_BITS; selected width retained.");}
+        if(config.kind==HG_MODULO){dtext(10,96,C_BLACK,"enable=0 hold; q wraps/recover at MODULUS");dtext(10,119,C_DARK,"Fixed width/N; out-of-range q recovers to0.");}
         if(config.kind==HG_RING){dtext(10,96,C_BLACK,"enable rotates one-hot q; reset selects seed.");dtext(10,119,C_DARK,"SEED_INDEX0=LSB; reset required to initialize.");}
         dtext(10,147,C_DARK,"q has no assumed power-up value.");
     }
@@ -155,7 +157,7 @@ static void export_page(void)
 static void draw(void)
 {
     dclear(C_WHITE);info_title("ECEN21 - Verilog generator",ACCENT);
-    dprint(10,26,C_DARK,"%s | %s",hg_name(config.kind),document.valid?"generated":"edit / unsolved");
+    dprint(10,26,C_DARK,"%s | %s",hg_name(config.kind),document.valid?"generated":"edit");
     if(view==SET)setup();else if(view==CODE)code();else if(view==PORTS)ports();else export_page();
     if(document.error[0]) {
         drect(7,172,389,208,C_WHITE);char line[47];snprintf(line,sizeof line,"%.46s",document.error);dtext(10,174,C_RED,line);
@@ -177,7 +179,7 @@ static void menu(void)
         dtext(10,84,C_BLACK,"EXPORT then F6 saves exact .v source bytes.");
         dtext(10,107,C_BLACK,"Slot00..99; existing files are protected.");
         dtext(10,130,C_BLACK,"Wrong parameters clear old code; fix/build.");
-        dtext(10,153,C_BLACK,"No initial q assumed; reset/load first.");
+        dtext(10,153,C_BLACK,"Exam style; no initial q; reset/load first.");
         dtext(10,190,C_DARK,"Any key returns; EXIT tool -> home.");dupdate();getkey();
     }
 }

@@ -4,7 +4,7 @@
 #include <stddef.h>
 #define HG_CAPACITY 8192u
 #define HG_LINE_WIDTH 46u
-typedef enum { HG_BEHAVIORAL,HG_STRUCTURAL,HG_ENCODER,HG_D,HG_T,HG_JK,HG_SHIFT,HG_MODULO,HG_RING } hg_kind;
+typedef enum { HG_BEHAVIORAL,HG_STRUCTURAL,HG_ENCODER,HG_D,HG_T,HG_JK,HG_SHIFT,HG_MODULO,HG_RING,HG_DATAFLOW,HG_KIND_COUNT } hg_kind;
 typedef enum { HG_NO_RESET,HG_SYNC_RESET,HG_ASYNC_RESET } hg_reset;
 typedef struct {
     hg_kind kind;
@@ -20,6 +20,7 @@ typedef struct {
     char error[80];
 } hg_document;
 void hg_init(hg_config *config,hg_kind kind);
+bool hg_is_adder(hg_kind kind);
 const char *hg_name(hg_kind kind);
 const char *hg_module(hg_kind kind);
 unsigned hg_min_width(unsigned modulus);

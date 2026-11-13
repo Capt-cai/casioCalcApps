@@ -2,14 +2,14 @@
 # M8 clean builds; preserves M5 engineering and accepted M4/M3/M2B/M2A and Phase 1 evidence.
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-WORK="$ROOT/.phase1/ecen21-m8"
+WORK="${ECEN21_M8_WORK:-$ROOT/.phase1/ecen21-m8}"
 IMAGE="manawyrm/fxsdk@sha256:292176e823e272b87b74f3e87b0c2ee26d4ada17abec017e98002c207a456227"
 mkdir -p "$WORK/logs" "$WORK/artifacts"
 rm -f "$WORK/artifacts/ECEN21.g3a" "$WORK/artifacts/EC21Test.g3a" "$WORK/artifacts/SHA256SUMS" "$WORK/artifacts/ECEN21.elf" "$WORK/verification.json" "$WORK/artifacts/EC21Bench.g3a"
-python3 - "$ROOT" <<'PY'
+python3 - "$ROOT" "$WORK" <<'PY'
 from pathlib import Path
 import hashlib, json, shutil, sys
-root = Path(sys.argv[1]); work = root/'.phase1/ecen21-m8'; dest = work/'build-source'
+root = Path(sys.argv[1]); work = Path(sys.argv[2]); dest = work/'build-source'
 if dest.exists(): shutil.rmtree(dest)
 for relative in ['apps/ecen21', 'common', 'experiments/boolean']:
     shutil.copytree(root/relative, dest/relative, ignore=shutil.ignore_patterns(

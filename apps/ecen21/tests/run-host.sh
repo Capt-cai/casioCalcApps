@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../../.." && pwd)"
-OUT="$ROOT/.phase1/ecen21-m8/host-tests"
+OUT="${ECEN21_M8_WORK:-$ROOT/.phase1/ecen21-m8}/host-tests"
 mkdir -p "$OUT"
 "${CC:-clang}" -std=c11 -O1 -g -Wall -Wextra -Werror -pedantic \
   -fsanitize=address,undefined -fno-omit-frame-pointer \

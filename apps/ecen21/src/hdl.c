@@ -6,10 +6,11 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
-static const char *const names[]={"Behavioral full adder","Structural full adder","Ordinary encoder","D flip-flop","T flip-flop","JK flip-flop","Universal shift register","Modulo-N counter","One-hot ring counter"};
-static const char *const modules[]={"ecen21_add_b","ecen21_add_s","ecen21_encoder","ecen21_dff","ecen21_tff","ecen21_jkff","ecen21_shift","ecen21_modulo","ecen21_ring"};
-const char *hg_name(hg_kind k) { return (unsigned)k<=HG_RING?names[k]:"Invalid family"; }
-const char *hg_module(hg_kind k) { return (unsigned)k<=HG_RING?modules[k]:"invalid"; }
+static const char *const names[]={"Behavioral adder","Structural adder","Ordinary encoder","D flip-flop","T flip-flop","JK flip-flop","Universal shift register","Modulo-N counter","One-hot ring counter","Dataflow adder"};
+static const char *const modules[]={"ecen21_add_b","ecen21_add_s","ecen21_encoder","ecen21_dff","ecen21_tff","ecen21_jkff","ecen21_shift","ecen21_modulo","ecen21_ring","ecen21_add_d"};
+bool hg_is_adder(hg_kind k) { return k==HG_BEHAVIORAL||k==HG_STRUCTURAL||k==HG_DATAFLOW; }
+const char *hg_name(hg_kind k) { return (unsigned)k<HG_KIND_COUNT?names[k]:"Invalid family"; }
+const char *hg_module(hg_kind k) { return (unsigned)k<HG_KIND_COUNT?modules[k]:"invalid"; }
 void hg_init(hg_config *c,hg_kind k)
 {
     if(!c)return;
@@ -27,87 +28,72 @@ static void emit(hg_document *d,const char *format,...)
 }
 static bool reject(hg_document *d,const char *why)
 { d->valid=false;d->length=0;d->code[0]=0;snprintf(d->error,sizeof d->error,"%s",why);return false; }
-static void guard(hg_document *d,const char *condition)
-{
-    emit(d,"// synthesis translate_off\ninitial begin\n  if (%s) begin\n    $display(\"ECEN21 parameter error\");\n    $finish;\n  end\nend\n// synthesis translate_on\n",condition);
-}
 static void always_begin(const hg_config *c,hg_document *d,const char *reset_expression)
 {
     emit(d,"always @(%s clk",c->falling?"negedge":"posedge");
     if(c->reset==HG_ASYNC_RESET)emit(d," or %s rst",c->reset_high?"posedge":"negedge");
-    emit(d,") begin\n");
-    if(c->reset!=HG_NO_RESET)emit(d,"  if (%srst) q <= %s;\n  else begin\n",c->reset_high?"":"!",reset_expression);
+    emit(d,")\n");
+    if(c->reset!=HG_NO_RESET)emit(d,"  if (%srst) q <= %s;\n  else ",c->reset_high?"":"!",reset_expression);
+    else emit(d,"  ");
 }
-static void always_end(const hg_config *c,hg_document *d)
-{ if(c->reset!=HG_NO_RESET)emit(d,"  end\n");emit(d,"end\nendmodule\n"); }
+static void always_end(hg_document *d) { emit(d,"endmodule\n"); }
 bool hg_generate(const hg_config *c,hg_document *d)
 {
     if(!d)return false;
     memset(d,0,sizeof *d);
     if(!c)return reject(d,"Missing generator settings");
-    if((unsigned)c->kind>HG_RING)return reject(d,"Invalid HDL family");
+    if((unsigned)c->kind>=HG_KIND_COUNT)return reject(d,"Invalid HDL family");
     if(c->width<1||c->width>32||c->slot>99)return reject(d,"Width1..32; export slot0..99");
     if((unsigned)c->reset>HG_ASYNC_RESET)return reject(d,"Invalid reset mode");
     if(c->kind==HG_ENCODER&&c->inputs!=4&&c->inputs!=8)return reject(d,"Encoder inputs must be4 or8");
     if(c->kind==HG_MODULO&&(c->modulus<1||c->modulus>65535||c->width<hg_min_width(c->modulus)||c->reset!=HG_SYNC_RESET))return reject(d,"Modulo1..65535; sufficient width; SYNC reset");
     if(c->kind==HG_RING&&(c->seed>=c->width||c->reset==HG_NO_RESET))return reject(d,"Ring seed<width; reset required");
-    emit(d,"// ECEN21 Toolkit: %s\n// Verilog-2001. Pin order/priority are explicit below.\n",hg_name(c->kind));
-    if(c->kind<=HG_STRUCTURAL) {
-        const char *name=hg_module(c->kind);
-        if(c->kind==HG_STRUCTURAL)emit(d,"module ecen21_fa1(input wire a,b,cin, output wire sum,cout);\nwire p;\nassign p=a^b;\nassign sum=p^cin;\nassign cout=(a&b)|(p&cin);\nendmodule\n\n");
-        emit(d,"module %s #(parameter integer WIDTH=%u)(\n  input wire [WIDTH-1:0] a,b, input wire cin,\n  output wire [WIDTH-1:0] sum, output wire cout);\n",name,c->width);
-        guard(d,"WIDTH<1 || WIDTH>32");
-        if(c->kind==HG_BEHAVIORAL)emit(d,"assign {cout,sum}={1'b0,a}+{1'b0,b}+cin;\n");
-        else emit(d,"// Bit0 is LSB; each stage consumes previous carry.\nwire [WIDTH:0] carry;\nassign carry[0]=cin;\nassign cout=carry[WIDTH];\ngenvar i;\ngenerate for(i=0;i<WIDTH;i=i+1) begin: bit_stage\n  ecen21_fa1 fa(.a(a[i]),.b(b[i]),.cin(carry[i]),\n    .sum(sum[i]),.cout(carry[i+1]));\nend endgenerate\n");
+    if(hg_is_adder(c->kind)) {
+        if(c->kind==HG_STRUCTURAL) {
+            emit(d,"module ecen21_fa1(input a,b,cin, output sum,cout);\nwire p,g,h;\nxor (p,a,b), (sum,p,cin);\nand (g,a,b), (h,p,cin);\nor (cout,g,h);\nendmodule\n\n");
+        }
+        emit(d,"module %s(input [%u:0] a,b, input cin,\n  output %s[%u:0] sum, output %scout);\n",hg_module(c->kind),c->width-1,c->kind==HG_BEHAVIORAL?"reg ":"",c->width-1,c->kind==HG_BEHAVIORAL?"reg ":"");
+        if(c->kind==HG_BEHAVIORAL)emit(d,"always @(*) {cout,sum} = a+b+cin;\n");
+        else if(c->kind==HG_DATAFLOW)emit(d,"assign {cout,sum} = a+b+cin;\n");
+        else emit(d,"wire [%u:0] carry;\nassign carry[0]=cin;\nassign cout=carry[%u];\ngenvar i;\ngenerate for(i=0;i<%u;i=i+1) begin:stage\n  ecen21_fa1 fa(a[i],b[i],carry[i],sum[i],carry[i+1]);\nend endgenerate\n",c->width,c->width,c->width);
         emit(d,"endmodule\n");
     }
     else if(c->kind==HG_ENCODER) {
-        emit(d,"// Ordinary active-high one-hot encoding. No priority.\n// Code ORs active indices even if invalid; only use when valid=1.\nmodule ecen21_encoder #(parameter integer INPUTS=%u)(\n  input wire [INPUTS-1:0] in,\n  output reg [(INPUTS==8?3:2)-1:0] code, output reg valid);\ninteger i,ones;\n",c->inputs);
-        emit(d,"// Default INPUTS mapping from the shared encoder model:\n");
-        for(unsigned i=0;i<c->inputs;i++) {
-            bool valid;unsigned code=cb_encoder_code(1u<<i,c->inputs,&valid);
-            if(!valid)return reject(d,"Shared encoder reference failed");
-            emit(d,"// I%u alone -> code%u, valid1\n",i,code);
-        }
-        guard(d,"INPUTS!=4 && INPUTS!=8");
-        emit(d,"always @* begin\n  code=0; ones=0;\n  for(i=0;i<INPUTS;i=i+1) begin\n    if(in[i]) begin code=code|i; ones=ones+1; end\n  end\n  valid=(ones==1);\nend\nendmodule\n");
+        emit(d,"module ecen21_encoder(input [%u:0] in,\n  output reg [%u:0] code, output reg valid);\ninteger i,ones;\nalways @(*) begin\n  code=0; ones=0;\n  for(i=0;i<%u;i=i+1)\n    if(in[i]) begin code=code|i; ones=ones+1; end\n  valid=(ones==1);\nend\nendmodule\n",c->inputs-1,c->inputs==8?2:1,c->inputs);
     }
     else if(c->kind<=HG_JK) {
         const char *ports=c->kind==HG_D?"d":c->kind==HG_T?"t":"j,k";
-        emit(d,"// q starts unspecified; reset/capture establishes state.\n// rst is ignored when reset mode is NONE.\nmodule %s #(parameter RESET_VALUE=1'b%u)(\n  input wire clk,rst,%s, output reg q);\n",hg_module(c->kind),c->reset_value?1:0,ports);
-        guard(d,"RESET_VALUE !== 1'b0 && RESET_VALUE !== 1'b1");
-        ff_type type=c->kind==HG_D?FF_D:c->kind==HG_T?FF_T:FF_JK;
-        emit(d,"// Shared FF characteristic rows: Q A B -> next (active edge)\n");
-        for(unsigned i=0;i<ff_characteristic_count(type);i++) {
-            ff_transition tr;
-            if(!ff_characteristic(type,i,&tr)||!tr.next_valid)return reject(d,"Shared FF reference failed");
-            emit(d,"// %u %u %u -> %u\n",tr.q,tr.a,tr.b,tr.next_q);
-        }
-        always_begin(c,d,"RESET_VALUE");
-        if(c->kind==HG_D)emit(d,"    q <= d;\n");
-        if(c->kind==HG_T)emit(d,"    q <= q ^ t;\n");
-        if(c->kind==HG_JK)emit(d,"    case ({j,k})\n      2'b00: q <= q;\n      2'b01: q <= 1'b0;\n      2'b10: q <= 1'b1;\n      2'b11: q <= ~q;\n      default: q <= 1'bx;\n    endcase\n");
-        always_end(c,d);
+        emit(d,"module %s(input clk,rst,%s, output reg q);\n",hg_module(c->kind),ports);
+        always_begin(c,d,c->reset_value?"1'b1":"1'b0");
+        if(c->kind==HG_D)emit(d,"q <= d;\n");
+        if(c->kind==HG_T)emit(d,"q <= q ^ t;\n");
+        if(c->kind==HG_JK)emit(d,"case ({j,k})\n    2'b00: q <= q;\n    2'b01: q <= 0;\n    2'b10: q <= 1;\n    2'b11: q <= ~q;\n    default: q <= 1'bx;\n  endcase\n");
+        always_end(d);
     }
     else if(c->kind==HG_SHIFT) {
-        emit(d,"// Priority: reset > load > right > left > hold.\n// Right inserts serial_left at MSB; left inserts serial_right at LSB.\n// q starts unspecified; reset or parallel load establishes state.\nmodule ecen21_shift #(parameter integer WIDTH=%u)(\n  input wire clk,rst,load,shift_right,shift_left,\n  input wire serial_left,serial_right,\n  input wire [WIDTH-1:0] parallel, output reg [WIDTH-1:0] q);\n",c->width);
-        guard(d,"WIDTH<1 || WIDTH>32");
-        always_begin(c,d,"{WIDTH{1'b0}}");
-        emit(d,"    if(load) q <= parallel;\n    else if(shift_right)\n      q <= (q >> 1) | ({{(WIDTH-1){1'b0}},serial_left} << (WIDTH-1));\n    else if(shift_left)\n      q <= (q << 1) | {{(WIDTH-1){1'b0}},serial_right};\n    else q <= q;\n");always_end(c,d);
+        emit(d,"module ecen21_shift(\n  input clk,rst,load,shift_right,shift_left,\n  input serial_left,serial_right,\n  input [%u:0] parallel, output reg [%u:0] q);\n",c->width-1,c->width-1);
+        always_begin(c,d,"0");
+        emit(d,"if(load) q <= parallel;\n  else if(shift_right) q <= ");
+        if(c->width==1)emit(d,"serial_left;\n");else emit(d,"{serial_left,q[%u:1]};\n",c->width-1);
+        emit(d,"  else if(shift_left) q <= ");
+        if(c->width==1)emit(d,"serial_right;\n");else emit(d,"{q[%u:0],serial_right};\n",c->width-2);
+        always_end(d);
     }
     else if(c->kind==HG_MODULO) {
-        emit(d,"// Synchronous reset. enable=0 holds; out-of-range states recover to0.\n// WIDTH defaults to safe ceil(log2(MODULUS)), with minimum1.\nmodule ecen21_modulo #(parameter integer MODULUS=%u,\n  parameter integer EXTRA_BITS=%u,\n  parameter integer WIDTH=EXTRA_BITS+(\n",c->modulus,c->width-hg_min_width(c->modulus));
-        for(unsigned i=1;i<=15;i++)emit(d,"    (MODULUS<=%u)?%u:\n",1u<<i,i);
-        emit(d,"    16))(input wire clk,rst,enable, output reg [WIDTH-1:0] q);\n");
-        guard(d,"MODULUS<1 || MODULUS>65535 || EXTRA_BITS<0 || EXTRA_BITS>31 || WIDTH<1 || WIDTH>32 || (64'd1<<WIDTH)<MODULUS");
-        emit(d,"// Selected calculator width=%u; override WIDTH if a wider counter is wanted.\n",c->width);
-        always_begin(c,d,"{WIDTH{1'b0}}");emit(d,"    if(enable) begin\n      if(q>=MODULUS-1) q <= 0;\n      else q <= q+1'b1;\n    end\n");always_end(c,d);
+        emit(d,"module ecen21_modulo(input clk,rst,enable,\n  output reg [%u:0] q);\n",c->width-1);
+        always_begin(c,d,"0");
+        emit(d,"if(enable)\n    if(q>=%u) q <= 0;\n    else q <= q+1'b1;\n",c->modulus-1);
+        always_end(d);
     }
     else {
-        emit(d,"// One-hot seed; enable holds/rotates. Reset establishes initial state.\nmodule ecen21_ring #(parameter integer WIDTH=%u,\n  parameter integer SEED_INDEX=%u)(\n  input wire clk,rst,enable, output reg [WIDTH-1:0] q);\nlocalparam [WIDTH-1:0] SEED={{(WIDTH-1){1'b0}},1'b1} << SEED_INDEX;\n",c->width,c->seed);
-        guard(d,"WIDTH<1 || WIDTH>32 || SEED_INDEX<0 || SEED_INDEX>=WIDTH");
-        always_begin(c,d,"SEED");
-        emit(d,"    if(enable) q <= %s;\n",c->right?"(q >> 1) | (q << (WIDTH-1))":"(q << 1) | (q >> (WIDTH-1))");always_end(c,d);
+        char seed[48];snprintf(seed,sizeof seed,"%u'd%llu",c->width,1ULL<<c->seed);
+        emit(d,"module ecen21_ring(input clk,rst,enable,\n  output reg [%u:0] q);\n",c->width-1);
+        always_begin(c,d,seed);
+        emit(d,"if(enable) q <= ");
+        if(c->width==1)emit(d,"q;\n");
+        else if(c->right)emit(d,"{q[0],q[%u:1]};\n",c->width-1);
+        else emit(d,"{q[%u:0],q[%u]};\n",c->width-2,c->width-1);
+        always_end(d);
     }
     if(d->error[0])return reject(d,"Generated source exceeds capacity");
     if(d->length&1u)emit(d,"\n");
@@ -125,8 +111,8 @@ bool hg_matches(const hg_config *c,const hg_document *d)
 }
 bool hg_filename(const hg_config *c,char *out,size_t cap)
 {
-    static const char *const prefix[]={"ECAB","ECAS","ECEN","ECDF","ECTF","ECJK","ECSR","ECMN","ECRG"};
-    if(!c||!out||!cap||(unsigned)c->kind>HG_RING||c->slot>99){if(out&&cap)out[0]=0;return false;}
+    static const char *const prefix[]={"ECAB","ECAS","ECEN","ECDF","ECTF","ECJK","ECSR","ECMN","ECRG","ECAD"};
+    if(!c||!out||!cap||(unsigned)c->kind>=HG_KIND_COUNT||c->slot>99){if(out&&cap)out[0]=0;return false;}
     int n=snprintf(out,cap,"%s%02u.v",prefix[c->kind],c->slot);return n>=0&&(size_t)n<cap;
 }
 /* Visual wrapping never modifies source bytes or drops indentation/characters. */

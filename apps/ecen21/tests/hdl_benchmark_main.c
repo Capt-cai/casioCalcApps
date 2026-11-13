@@ -17,7 +17,7 @@ static int save(void)
 int main(void)
 {
     bool ok=true;unsigned bytes=0,lines=0,count=0;
-    for(unsigned kind=0;kind<=HG_RING;kind++)for(unsigned fall=0;fall<2;fall++)for(unsigned high=0;high<2;high++) {
+    for(unsigned kind=0;kind<HG_KIND_COUNT;kind++)for(unsigned fall=0;fall<2;fall++)for(unsigned high=0;high<2;high++) {
         hg_config c;hg_init(&c,(hg_kind)kind);c.width=32;c.inputs=8;c.modulus=65535;c.seed=31;c.slot=99;c.falling=fall!=0;c.reset_high=high!=0;c.reset_value=true;c.right=fall!=0;
         ok=ok&&hg_generate(&c,&doc)&&doc.valid&&!(doc.length&1u)&&strlen(doc.code)==doc.length;
         if(doc.length>bytes)bytes=doc.length;

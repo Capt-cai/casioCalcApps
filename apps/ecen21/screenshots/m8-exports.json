@@ -219,5 +219,18 @@
     "high": 0,
     "value": 0,
     "right": 1
+  },
+  "ECAD00.v": {
+    "kind": 9,
+    "width": 5,
+    "inputs": 4,
+    "modulus": 12,
+    "seed": 0,
+    "slot": 0,
+    "falling": 0,
+    "reset": 1,
+    "high": 1,
+    "value": 0,
+    "right": 0
   }
 }

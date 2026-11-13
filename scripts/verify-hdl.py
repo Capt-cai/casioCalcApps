@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Compile actual portable-generator output with Icarus -g2001; run independent benches."""
 from pathlib import Path
+import os
 import argparse,hashlib,json,random,re,shutil,subprocess
 ROOT=Path(__file__).resolve().parents[1]
-WORK=ROOT/'.phase1/ecen21-m8'
-args=argparse.ArgumentParser();args.add_argument('--export-dir',type=Path);options=args.parse_args()
+WORK=Path(os.environ.get('ECEN21_M8_WORK',str(ROOT/'.phase1/ecen21-m8')))
+args=argparse.ArgumentParser();args.add_argument('--export-dir',type=Path);args.add_argument('--baseline-generator',type=Path);options=args.parse_args()
 OUT=WORK/('hdl-export-verification' if options.export_dir else 'hdl-verification')
 GEN=WORK/'host-tests/generate-hdl'
 IVERILOG=shutil.which('iverilog') or '/opt/homebrew/bin/iverilog'
@@ -27,9 +28,10 @@ def config(kind,**kw):
 
 def generated(c):
     args=[c[k] for k in ('kind','width','inputs','modulus','seed','slot','falling','reset','high','value','right')]
-    p=subprocess.run([str(GEN),*map(str,args)],capture_output=True,check=True)
+    if options.baseline_generator and c["kind"]==9:args[0]=0
+    p=subprocess.run([str(options.baseline_generator or GEN),*map(str,args)],capture_output=True,check=True)
     assert p.stdout and len(p.stdout)%2==0 and b'\x00' not in p.stdout
-    return p.stdout.decode()
+    return p.stdout.decode().replace("ecen21_add_b","ecen21_add_d") if options.baseline_generator and c["kind"]==9 else p.stdout.decode()
 
 export_sources={};export_uses={}
 if options.export_dir:
@@ -42,11 +44,6 @@ if options.export_dir:
 
 def source(c,exact=False):
     ignored={'slot'}
-    if not exact:
-        if c['kind'] in (0,1,6):ignored.add('width')
-        if c['kind']==2:ignored.add('inputs')
-        if c['kind']==7:ignored.update(('width','modulus'))
-        if c['kind']==8:ignored.update(('width','seed'))
     candidates=[]
     for name,(settings,data) in export_sources.items():
         if all(c[k]==settings[k] for k in c if k not in ignored):
@@ -83,18 +80,18 @@ rng=random.Random(821)
 for w in (1,2,3,5,8,16,31,32):
     mask=(1<<w)-1
     pairs=[(a,b) for a in range(1<<w) for b in range(1<<w)] if w<=5 else [(a,b) for a in (0,1,mask//2,mask//2+1,mask-1,mask) for b in (0,1,mask//2,mask//2+1,mask-1,mask)]+[(rng.randrange(mask+1),rng.randrange(mask+1)) for _ in range(128)]
-    declarations=f'reg [{w-1}:0] a,b; reg cin; wire [{w-1}:0] sb,ss;wire cb,cs;\necen21_add_b #(.WIDTH({w})) b_dut(a,b,cin,sb,cb);\necen21_add_s #(.WIDTH({w})) s_dut(a,b,cin,ss,cs);'
+    declarations=f'reg [{w-1}:0] a,b; reg cin; wire [{w-1}:0] sb,ss,sd;wire cb,cs,cd;\necen21_add_b b_dut(a,b,cin,sb,cb);\necen21_add_s s_dut(a,b,cin,ss,cs);\necen21_add_d d_dut(a,b,cin,sd,cd);'
     body=''
     for a,b in pairs:
         for cin in (0,1):
             total=a+b+cin
-            body+=f'a={w}\'d{a};b={w}\'d{b};cin={cin};#1;\n'+check(f"{{cb,sb}} === {w+1}'d{total} && {{cs,ss}} === {w+1}'d{total}",'adder')
-    run(f'adder-{w}',source(config(0,width=w))+source(config(1,width=w)),declarations,body)
+            body+=f'a={w}\'d{a};b={w}\'d{b};cin={cin};#1;\n'+check(f"{{cb,sb}} === {w+1}'d{total} && {{cs,ss}} === {w+1}'d{total} && {{cd,sd}} === {w+1}'d{total}",'adder')
+    run(f'adder-{w}',source(config(0,width=w))+source(config(1,width=w))+source(config(9,width=w)),declarations,body)
 
 # Ordinary encoder: every binary pattern, including zero/multiple invalid inputs.
 for n in (4,8):
     bits=2 if n==4 else 3
-    decl=f'reg [{n-1}:0] in;wire [{bits-1}:0] code;wire valid;ecen21_encoder #(.INPUTS({n})) dut(in,code,valid);'
+    decl=f'reg [{n-1}:0] in;wire [{bits-1}:0] code;wire valid;ecen21_encoder dut(in,code,valid);'
     body=''
     for pattern in range(1<<n):
         code=0
@@ -150,7 +147,7 @@ for w in (1,2,5,8,32):
   for reset in (0,1,2):
    for high in (0,1):
     mask=(1<<w)-1;c=config(6,width=w,falling=falling,reset=reset,high=high)
-    decl=f'reg clk,rst,load,shift_right,shift_left,serial_left,serial_right;reg [{w-1}:0] parallel;wire [{w-1}:0] q;ecen21_shift #(.WIDTH({w})) dut(clk,rst,load,shift_right,shift_left,serial_left,serial_right,parallel,q);'
+    decl=f'reg clk,rst,load,shift_right,shift_left,serial_left,serial_right;reg [{w-1}:0] parallel;wire [{w-1}:0] q;ecen21_shift dut(clk,rst,load,shift_right,shift_left,serial_left,serial_right,parallel,q);'
     inactive=falling;active=1-falling;body=f'clk={inactive};rst={1-high};load=1;shift_right=0;shift_left=0;serial_left=0;serial_right=0;parallel={w}\'d{mask};#1;clk={active};#1;'+check(f"q === {w}'d{mask}",'load')+f'clk={inactive};#1;';q=mask
     for request in range(8):
      for sl in (0,1):
@@ -169,18 +166,19 @@ for n in (1,2,3,12,31,65535):
  for falling in (0,1):
   for high in (0,1):
     width=max(1,(n-1).bit_length());c=config(7,width=width,modulus=n,falling=falling,high=high)
-    decl=f'reg clk,rst,enable;wire [{width-1}:0] q;integer i,expected;ecen21_modulo #(.MODULUS({n}),.WIDTH({width}),.EXTRA_BITS(0)) dut(clk,rst,enable,q);'
+    decl=f'reg clk,rst,enable;wire [{width-1}:0] q;integer i,expected;ecen21_modulo dut(clk,rst,enable,q);'
     inactive=falling;active=1-falling;body=f'clk={inactive};rst={high};enable=1;#1;clk={active};#1;'+check(f"q === {width}'d0",'counter reset')+f'clk={inactive};rst={1-high};#1;expected=0;\n'
     body+=f'for(i=0;i<{n+3};i=i+1) begin\nclk={active};#1;expected=(expected+1)%{n};\n'+check('q === expected','counter modulo')+f'clk={inactive};#1;end\n'
     body+=f'enable=0;rst={high};#1;'+check('q === expected','sync reset waits')+f'clk={active};#1;'+check('q === 0','reset overrides enable')+f'clk={inactive};rst={1-high};#1;clk={active};#1;'+check('q === 0','enable hold')
     body+=f'clk={inactive};enable=1;dut.q={width}\'d{(1<<width)-1};#1;clk={active};#1;'+check('q === 0','invalid counter recovery')
     run(f'mod-{n}-{falling}-{high}',source(c),decl,body)
-# Changing MODULUS alone recomputes default WIDTH; wider selected width is retained.
-for width,n in ((2,3),(8,12),(32,12)):
-    c=config(7,width=width if n==12 else 4,modulus=12)
-    decl=f'reg clk,rst,enable;wire [{width-1}:0] q;ecen21_modulo #(.MODULUS({n})) dut(clk,rst,enable,q);'
-    body='clk=0;rst=1;enable=1;#1;clk=1;#1;'+check('q === 0','override reset')+'clk=0;rst=0;#1;clk=1;#1;'+check('q === 1','override increment')
-    run(f'mod-override-{n}-{width}',source(c,exact=True),decl,body)
+# Extra selected widths retain high bits, recovery and reset semantics.
+for width in (8,32):
+    c=config(7,width=width,modulus=12)
+    decl=f'reg clk,rst,enable;wire [{width-1}:0] q;ecen21_modulo dut(clk,rst,enable,q);'
+    body='clk=0;rst=1;enable=1;#1;clk=1;#1;'+check('q === 0','wide reset')+'clk=0;rst=0;#1;clk=1;#1;'+check('q === 1','wide increment')
+    body+=f'clk=0;dut.q={width}\'d{(1<<width)-1};#1;clk=1;#1;'+check('q === 0','wide recovery')
+    run(f'mod-wide-{width}',source(c),decl,body)
 
 # Ring: one-hot seed, both directions/edges/reset polarities, enable and period.
 for w in (1,2,5,8,32):
@@ -190,7 +188,7 @@ for w in (1,2,5,8,32):
     for right in (0,1):
      for seed in sorted({0,w-1,2 if w==8 else 0}):
       c=config(8,width=w,falling=falling,reset=reset,high=high,right=right,seed=seed);mask=(1<<w)-1;q=1<<seed
-      decl=f'reg clk,rst,enable;wire [{w-1}:0] q;ecen21_ring #(.WIDTH({w}),.SEED_INDEX({seed})) dut(clk,rst,enable,q);'
+      decl=f'reg clk,rst,enable;wire [{w-1}:0] q;ecen21_ring dut(clk,rst,enable,q);'
       inactive=falling;active=1-falling;body=f'clk={inactive};rst={1-high};enable=1;#1;rst={high};#1;'+check(f"q === {w}'d{q}" if reset==2 else "q === {"+f"{w}{{1'bx}}"+"}",'ring initial reset timing')
       body+=f'clk={active};#1;'+check(f"q === {w}'d{q}",'ring seed')+f'clk={inactive};rst={1-high};#1;'
       for i in range(w*2):
@@ -199,19 +197,14 @@ for w in (1,2,5,8,32):
       body+=f'enable=0;clk={active};#1;'+check(f"q === {w}'d{q}",'ring hold')
       run(f'ring-{w}-{falling}-{reset}-{high}-{right}-{seed}',source(c),decl,body)
 
-# Parameter override smoke uses an unchanged WIDTH5 source.
-for w in (1,8,32):
-    for kind in (6,8):
-        if kind==6:
-            decl=f"reg clk=0,rst=1,load=0,sr=0,sl=0,il=0,ir=0;reg [{w-1}:0] p=0;wire [{w-1}:0] q;ecen21_shift #(.WIDTH({w})) dut(clk,rst,load,sr,sl,il,ir,p,q);"
-        else:
-            decl=f"reg clk=0,rst=1,en=1;wire [{w-1}:0] q;ecen21_ring #(.WIDTH({w})) dut(clk,rst,en,q);"
-        body='#1;clk=1;#1;'+check('q === '+('0' if kind==6 else '1'),'width override')
-        run(f'width-override-{kind}-{w}',source(config(kind),exact=True),decl,body)
-
-# Simulator guards reject unsupported parameter overrides.
-invalid=[(config(3),'ecen21_dff #(.RESET_VALUE(2)) dut();'),(config(0),'ecen21_add_b #(.WIDTH(0)) dut();'),(config(1),'ecen21_add_s #(.WIDTH(33)) dut();'),(config(2),'ecen21_encoder #(.INPUTS(5)) dut();'),(config(6),'ecen21_shift #(.WIDTH(33)) dut();'),(config(7),'ecen21_modulo #(.MODULUS(0)) dut();'),(config(7),'ecen21_modulo #(.WIDTH(1)) dut();'),(config(8),'ecen21_ring #(.SEED_INDEX(5)) dut();')]
-for i,(c,decl) in enumerate(invalid):run(f'invalid-override-{i}',source(c),decl,'#2;',error=True)
+# Validate emitted modeling forms separately from behavioral simulation.
+if not options.baseline_generator:
+    for k in range(10):
+        code=generated(config(k))
+        assert not any(token in code for token in ('parameter','initial','$display','$finish','translate_','//'))
+        if k==0:assert 'always @(*)' in code and 'output reg' in code and 'assign ' not in code
+        if k==9:assert 'assign {cout,sum}' in code and 'always' not in code and 'reg ' not in code
+        if k==1:assert all(token in code for token in ('xor (','and (','or (','ecen21_fa1 fa(')) and 'always' not in code
 
 summary=dict(simulator='Icarus Verilog'+version_match[1],language='Verilog-2001 (-g2001)',cases=len(results),checks=sum(r['checks'] for r in results),results=results,physical_fpga_tested=False)
 if options.export_dir and not all(export_uses.values()):raise RuntimeError('Unsimulated exported source: '+str(export_uses))

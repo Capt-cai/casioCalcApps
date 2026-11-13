@@ -416,3 +416,22 @@ Added four existing genuine emulator screenshots and a reproducible ReportLab
 renderer (Python3 + reportlab + an installed CJK TrueType font; --font override).
 No application source, binary, architecture or milestone acceptance changed.
 M9 remains unapproved; all new feature development remains paused.
+
+## M8 exam-oriented revision — authorized 2026-11-13
+
+User explicitly authorized an M8-only revision, not M9. Branch:
+codex/m8-exam-verilog. Preserve the recovered M8 engineering tag/artifact,
+all accepted versions, and every existing user manual (including the PDF).
+No new or rewritten user guide is authorized for this task.
+
+Scope: concise fixed-selected-width Verilog-2001, correct behavioral always@(*)
+vs dataflow assign vs genuinely structural primitive/FA-instance modeling;
+retain all nine design families/settings/paging/ports/export/no-overwrite and
+other six tools. Add an adder Model setting and a separate ECAD dataflow prefix.
+Validate host/core regressions, actual Icarus behavior across boundary widths,
+reset priority, both shifts, old/new results against independent oracles,
+fresh production/target builds, all-screen code navigation/native exports and
+unchanged previous-tool emulator pixels. Compare real before/after lengths.
+New work/evidence uses .phase1/ecen21-m8-exam via ECEN21_M8_WORK so original
+M8 evidence remains intact. Engineering in progress; hardware pending.
+Stop after engineering handoff; M9 remains unapproved.

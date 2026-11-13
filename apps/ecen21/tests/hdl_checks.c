@@ -31,14 +31,18 @@ static int line_checks(unsigned *checks)
 int hg_run_checks(unsigned *checks)
 {
     *checks=0;hg_config c;char filename[16];
-    for(unsigned kind=0;kind<=HG_RING;kind++)for(unsigned width=1;width<=32;width++) {
+    for(unsigned kind=0;kind<HG_KIND_COUNT;kind++)for(unsigned width=1;width<=32;width++) {
         hg_init(&c,(hg_kind)kind);c.width=width;c.modulus=width<16?(1u<<width):65535;c.seed=width-1;
         for(unsigned fall=0;fall<2;fall++)for(unsigned high=0;high<2;high++) {
             c.falling=fall!=0;c.reset_high=high!=0;c.reset_value=high!=0;c.right=fall!=0;
             CHECK(hg_generate(&c,&doc));CHECK(doc.valid&&doc.length>0&&doc.length<HG_CAPACITY&&!(doc.length&1u));
             CHECK(strlen(doc.code)==doc.length);CHECK(strstr(doc.code,"endmodule\n")!=NULL);
             CHECK(hg_filename(&c,filename,sizeof filename));CHECK(strlen(filename)<=12);
-            if(kind>=HG_D)CHECK(strstr(doc.code,fall?"negedge clk":"posedge clk")!=NULL);
+            if(kind>=HG_D&&kind<=HG_RING)CHECK(strstr(doc.code,fall?"negedge clk":"posedge clk")!=NULL);
+            CHECK(!strstr(doc.code,"parameter")&&!strstr(doc.code,"initial")&&!strstr(doc.code,"translate_off")&&!strstr(doc.code,"//"));
+            if(kind==HG_BEHAVIORAL)CHECK(strstr(doc.code,"always @(*)")&&!strstr(doc.code,"assign"));
+            if(kind==HG_DATAFLOW)CHECK(strstr(doc.code,"assign {cout,sum}")&&!strstr(doc.code,"always"));
+            if(kind==HG_STRUCTURAL)CHECK(strstr(doc.code,"xor (")&&strstr(doc.code,"and (")&&strstr(doc.code,"or (")&&strstr(doc.code,"ecen21_fa1 fa(")&&!strstr(doc.code,"always"));
             int rc=line_checks(checks);if(rc)return rc;
         }
     }
