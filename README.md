@@ -4,6 +4,10 @@ Native offline Casio fx-CG50 toolkit. Phase1 and originalM2A-M4 accepted;M5/M6
 hardware deferred;custom-width/M7/M8 user acceptance pending. All new features
 paused for P0 version-control protection;M9 has not started.
 
+- M8 exam-oriented revision (hardware acceptance pending):
+  [new ECEN21.g3a](releases/engineering/M8-exam/ECEN21.g3a),
+  [engineering results and examples](docs/M8-EXAM-REVISION.md).
+  Existing user manuals describe the preserved original M8 build.
 - Current source/tests:[apps/ecen21](apps/ecen21/).
 - Actual user program:[M8 ECEN21.g3a](releases/engineering/M8/ECEN21.g3a),engineering
   verified,not yet an accepted/stable release.

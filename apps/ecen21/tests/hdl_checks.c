@@ -15,6 +15,7 @@ static int close_file(void *ctx,int fd) { storage *s=ctx;s->closes++;return fd!=
 static int remove_file(void *ctx,const char *name) { storage *s=ctx;(void)name;if(s->failure==7)return -6;s->present=false;s->removed=true;return 0; }
 static int line_checks(unsigned *checks)
 {
+    unsigned raw=0;for(unsigned i=0;i<doc.length;i++){if(doc.code[i]=='\n')raw=0;else {raw++;CHECK(raw<=HG_LINE_WIDTH);}}
     unsigned visual=0,column=0;char actual[47],expected[47];
     for(unsigned i=0;i<doc.length;i++) {
         char c=doc.code[i];
@@ -22,7 +23,7 @@ static int line_checks(unsigned *checks)
             expected[column]=0;CHECK(hg_line(&doc,visual++,actual,sizeof actual));CHECK(!strcmp(actual,expected));column=0;
             if(c=='\n')continue;
         }
-        expected[column++]=c;
+        CHECK(column<46);expected[column++]=c;
     }
     if(column){expected[column]=0;CHECK(hg_line(&doc,visual++,actual,sizeof actual));CHECK(!strcmp(actual,expected));}
     CHECK(visual==hg_pages_lines(&doc));CHECK(!hg_line(&doc,visual,actual,sizeof actual));

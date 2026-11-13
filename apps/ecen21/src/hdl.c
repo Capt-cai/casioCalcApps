@@ -50,20 +50,20 @@ bool hg_generate(const hg_config *c,hg_document *d)
     if(c->kind==HG_RING&&(c->seed>=c->width||c->reset==HG_NO_RESET))return reject(d,"Ring seed<width; reset required");
     if(hg_is_adder(c->kind)) {
         if(c->kind==HG_STRUCTURAL) {
-            emit(d,"module ecen21_fa1(input a,b,cin, output sum,cout);\nwire p,g,h;\nxor (p,a,b), (sum,p,cin);\nand (g,a,b), (h,p,cin);\nor (cout,g,h);\nendmodule\n\n");
+            emit(d,"module ecen21_fa1(input a,b,cin,\n  output sum,cout);\nwire p,g,h;\nxor (p,a,b), (sum,p,cin);\nand (g,a,b), (h,p,cin);\nor (cout,g,h);\nendmodule\n\n");
         }
-        emit(d,"module %s(input [%u:0] a,b, input cin,\n  output %s[%u:0] sum, output %scout);\n",hg_module(c->kind),c->width-1,c->kind==HG_BEHAVIORAL?"reg ":"",c->width-1,c->kind==HG_BEHAVIORAL?"reg ":"");
+        emit(d,"module %s(\n  input [%u:0] a,b, input cin,\n  output %s[%u:0] sum, output %scout);\n",hg_module(c->kind),c->width-1,c->kind==HG_BEHAVIORAL?"reg ":"",c->width-1,c->kind==HG_BEHAVIORAL?"reg ":"");
         if(c->kind==HG_BEHAVIORAL)emit(d,"always @(*) {cout,sum} = a+b+cin;\n");
         else if(c->kind==HG_DATAFLOW)emit(d,"assign {cout,sum} = a+b+cin;\n");
-        else emit(d,"wire [%u:0] carry;\nassign carry[0]=cin;\nassign cout=carry[%u];\ngenvar i;\ngenerate for(i=0;i<%u;i=i+1) begin:stage\n  ecen21_fa1 fa(a[i],b[i],carry[i],sum[i],carry[i+1]);\nend endgenerate\n",c->width,c->width,c->width);
+        else emit(d,"wire [%u:0] carry;\nassign carry[0]=cin;\nassign cout=carry[%u];\ngenvar i;\ngenerate for(i=0;i<%u;i=i+1) begin:stage\n  ecen21_fa1 fa(a[i],b[i],carry[i],\n    sum[i],carry[i+1]);\nend endgenerate\n",c->width,c->width,c->width);
         emit(d,"endmodule\n");
     }
     else if(c->kind==HG_ENCODER) {
-        emit(d,"module ecen21_encoder(input [%u:0] in,\n  output reg [%u:0] code, output reg valid);\ninteger i,ones;\nalways @(*) begin\n  code=0; ones=0;\n  for(i=0;i<%u;i=i+1)\n    if(in[i]) begin code=code|i; ones=ones+1; end\n  valid=(ones==1);\nend\nendmodule\n",c->inputs-1,c->inputs==8?2:1,c->inputs);
+        emit(d,"module ecen21_encoder(input [%u:0] in,\n  output reg [%u:0] code, output reg valid);\ninteger i,ones;\nalways @(*) begin\n  code=0; ones=0;\n  for(i=0;i<%u;i=i+1)\n    if(in[i]) begin\n      code=code|i; ones=ones+1;\n    end\n  valid=(ones==1);\nend\nendmodule\n",c->inputs-1,c->inputs==8?2:1,c->inputs);
     }
     else if(c->kind<=HG_JK) {
         const char *ports=c->kind==HG_D?"d":c->kind==HG_T?"t":"j,k";
-        emit(d,"module %s(input clk,rst,%s, output reg q);\n",hg_module(c->kind),ports);
+        emit(d,"module %s(input clk,rst,%s,\n  output reg q);\n",hg_module(c->kind),ports);
         always_begin(c,d,c->reset_value?"1'b1":"1'b0");
         if(c->kind==HG_D)emit(d,"q <= d;\n");
         if(c->kind==HG_T)emit(d,"q <= q ^ t;\n");
@@ -71,11 +71,11 @@ bool hg_generate(const hg_config *c,hg_document *d)
         always_end(d);
     }
     else if(c->kind==HG_SHIFT) {
-        emit(d,"module ecen21_shift(\n  input clk,rst,load,shift_right,shift_left,\n  input serial_left,serial_right,\n  input [%u:0] parallel, output reg [%u:0] q);\n",c->width-1,c->width-1);
+        emit(d,"module ecen21_shift(\n  input clk,rst,load,shift_right,shift_left,\n  input serial_left,serial_right,\n  input [%u:0] parallel,\n  output reg [%u:0] q);\n",c->width-1,c->width-1);
         always_begin(c,d,"0");
-        emit(d,"if(load) q <= parallel;\n  else if(shift_right) q <= ");
+        emit(d,"if(load) q <= parallel;\n  else if(shift_right)\n    q <= ");
         if(c->width==1)emit(d,"serial_left;\n");else emit(d,"{serial_left,q[%u:1]};\n",c->width-1);
-        emit(d,"  else if(shift_left) q <= ");
+        emit(d,"  else if(shift_left)\n    q <= ");
         if(c->width==1)emit(d,"serial_right;\n");else emit(d,"{q[%u:0],serial_right};\n",c->width-2);
         always_end(d);
     }

@@ -1,0 +1,103 @@
+{
+  "variants": 10,
+  "source_pages": 16,
+  "page_wrap_checks": 10,
+  "records": [
+    {
+      "kind": 0,
+      "pages": 1,
+      "visual_lines": 6,
+      "source_sha256": "7a5b7fb4da7b3adf6538a978d4f25dbcdb5451035feb91b19225fe78d8b1db4c",
+      "screenshots": [
+        "kind0-page1.png"
+      ]
+    },
+    {
+      "kind": 1,
+      "pages": 3,
+      "visual_lines": 20,
+      "source_sha256": "ff82776242612acc108598e5046dc33521a955e62c7474c466dd3cb7d334f983",
+      "screenshots": [
+        "kind1-page1.png",
+        "kind1-page2.png",
+        "kind1-page3.png"
+      ]
+    },
+    {
+      "kind": 2,
+      "pages": 2,
+      "visual_lines": 12,
+      "source_sha256": "8404eb1417a8ee4fbe6000b56f5a78a829d1997ec858a1abeda278efb84a0bf3",
+      "screenshots": [
+        "kind2-page1.png",
+        "kind2-page2.png"
+      ]
+    },
+    {
+      "kind": 3,
+      "pages": 1,
+      "visual_lines": 7,
+      "source_sha256": "e6f44d9096956df747cd9b6404ad686e6627564daebe19690ab609d6dfb4ef26",
+      "screenshots": [
+        "kind3-page1.png"
+      ]
+    },
+    {
+      "kind": 4,
+      "pages": 1,
+      "visual_lines": 7,
+      "source_sha256": "1ae7c205ae37b6f2857fc0114031a662bfbf2ca9839f8c329c896d4115399e8d",
+      "screenshots": [
+        "kind4-page1.png"
+      ]
+    },
+    {
+      "kind": 5,
+      "pages": 2,
+      "visual_lines": 12,
+      "source_sha256": "d26894c5c0a1488c22dafd0cedd66a490d5a95d8d833d29fdab2ca93e4e5a089",
+      "screenshots": [
+        "kind5-page1.png",
+        "kind5-page2.png"
+      ]
+    },
+    {
+      "kind": 6,
+      "pages": 2,
+      "visual_lines": 14,
+      "source_sha256": "f286807442f61aea8191df5883698b1e48fc37464ad2816afb3e49c0f78492e7",
+      "screenshots": [
+        "kind6-page1.png",
+        "kind6-page2.png"
+      ]
+    },
+    {
+      "kind": 7,
+      "pages": 2,
+      "visual_lines": 9,
+      "source_sha256": "dfceb4fafca927015ab2ef15de1d1c20a8224d7edc7dbab2fa46f3031576e298",
+      "screenshots": [
+        "kind7-page1.png",
+        "kind7-page2.png"
+      ]
+    },
+    {
+      "kind": 8,
+      "pages": 1,
+      "visual_lines": 6,
+      "source_sha256": "5fd54d39fc14bf762a763ff8eda8f5436c9cdbaa5752da30f8e815af3dce1131",
+      "screenshots": [
+        "kind8-page1.png"
+      ]
+    },
+    {
+      "kind": 9,
+      "pages": 1,
+      "visual_lines": 5,
+      "source_sha256": "73ad77fd07511ca0c880ceaefec681cb373c0d666c40de09cf0625e5cf733f4c",
+      "screenshots": [
+        "kind9-page1.png"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+   text	   data	    bss	    dec	    hex	filename
+ 127104	    464	  24304	 151872	  25140	build-cg/ECEN21

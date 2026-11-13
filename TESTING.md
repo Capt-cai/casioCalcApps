@@ -843,3 +843,33 @@ This is not a fresh app build/full functional regression or physical test. All
 other recipe coverage derives from source review and previously recorded checks;
 no new hardware acceptance, USB verification or M9 coverage is claimed.
 Regenerate:python3 scripts/build-user-manual.py [--font /path/to/CJK.ttf].
+
+## M8 exam-oriented revision — engineering verification passed
+
+Completed authorized M8-only revision on codex/m8-exam-verilog. All nine original
+families/settings/export protections retained; adders explicitly distinguish
+behavioral/dataflow/structural. Fixed-selected-width templates remove engineering
+boilerplate; defaults shrink49.4..85.6%in bytes. Every raw line fits46characters.
+Ten sanitized host suites and matching target suites pass;HDL328cases/280690checks
+pass on both old/new generators against independent oracles.18native exports
+compile/simulate;467prior tool screens unchanged;M8 74images/21invariants;
+10variants/16complete code pages visually checked. Clean production/test/benchmark
+builds pass;40maximum configs peak428source bytes/20visual lines.
+
+Deliverable:releases/engineering/M8-exam/ECEN21.g3a,156256bytes,
+SHA2568e2c940df3b16878c1f1a8c1b617e4b37f95b34fc7061161951bb2a3c80e4152.
+Internal design/reproduction/results:docs/M8-EXAM-REVISION.md. Original M8 binary,
+all10recovery archives and all10existing user guides/PDFs unchanged. No user
+manual created/rewritten,per explicit task instruction. New engineering checkpoint
+name:engineering/m8-exam-verilog (not an accepted/stable release).
+Hardware acceptance of this revision is pending. Other pending/deferred statuses
+remain separate. Next action:await user physical acceptance or bounded M8 fixes.
+M9 remains unapproved and has not started. No physical timing/USB/FPGA claim.
+
+Verification details and exact commands are in docs/M8-EXAM-REVISION.md. Archived
+machine reports/source manifest/host report are under releases/engineering/M8-exam.
+The old343HDL cases included runtime parameter/override mechanisms intentionally
+removed from exam output;new328cases retain functional oracles and add a third
+adder output. Calculator-side invalid settings remain tested. Generator formatting
+assertions contribute to555404M8shared checks;they are not all distinct logical
+vectors. Final source/binary verification ran after the46character template edit.

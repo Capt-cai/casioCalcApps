@@ -1,0 +1,82 @@
+[
+  {
+    "kind": 0,
+    "before_bytes": 458,
+    "after_bytes": 138,
+    "before_nonblank_lines": 15,
+    "after_nonblank_lines": 5,
+    "reduction_percent": 69.9
+  },
+  {
+    "kind": 1,
+    "before_bytes": 838,
+    "after_bytes": 424,
+    "before_nonblank_lines": 29,
+    "after_nonblank_lines": 19,
+    "reduction_percent": 49.4
+  },
+  {
+    "kind": 2,
+    "before_bytes": 868,
+    "after_bytes": 248,
+    "before_nonblank_lines": 29,
+    "after_nonblank_lines": 12,
+    "reduction_percent": 71.4
+  },
+  {
+    "kind": 3,
+    "before_bytes": 684,
+    "after_bytes": 122,
+    "before_nonblank_lines": 26,
+    "after_nonblank_lines": 6,
+    "reduction_percent": 82.2
+  },
+  {
+    "kind": 4,
+    "before_bytes": 688,
+    "after_bytes": 126,
+    "before_nonblank_lines": 26,
+    "after_nonblank_lines": 6,
+    "reduction_percent": 81.7
+  },
+  {
+    "kind": 5,
+    "before_bytes": 878,
+    "after_bytes": 240,
+    "before_nonblank_lines": 36,
+    "after_nonblank_lines": 12,
+    "reduction_percent": 72.7
+  },
+  {
+    "kind": 6,
+    "before_bytes": 964,
+    "after_bytes": 338,
+    "before_nonblank_lines": 29,
+    "after_nonblank_lines": 13,
+    "reduction_percent": 64.9
+  },
+  {
+    "kind": 7,
+    "before_bytes": 1254,
+    "after_bytes": 180,
+    "before_nonblank_lines": 42,
+    "after_nonblank_lines": 8,
+    "reduction_percent": 85.6
+  },
+  {
+    "kind": 8,
+    "before_bytes": 708,
+    "after_bytes": 156,
+    "before_nonblank_lines": 22,
+    "after_nonblank_lines": 6,
+    "reduction_percent": 78.0
+  },
+  {
+    "kind": 9,
+    "before_bytes": null,
+    "after_bytes": 124,
+    "before_nonblank_lines": null,
+    "after_nonblank_lines": 5,
+    "reduction_percent": null
+  }
+]
