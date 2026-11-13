@@ -816,3 +816,30 @@ Local bundle also passed independent clone/restore. Permanent task-start Git,
 branch,commit,engineering/accepted distinction and safe-push rules are inAGENTS.
 All new features remain paused;M9 not started. M5/M6deferred,M7/M8/custom-width
 pending;originalM2A-M4user-reported hardware acceptance retained.
+
+## Chinese user manual verification — 2026-11-12
+
+Documentation-only task on codex/docs-chinese-user-manual. Reviewed current
+launcher/UI/core sources and prior milestone acceptance evidence, rather than
+assuming old guides still describe the integrated M8 UI.
+
+- Ran the actual production releases/engineering/M8/ECEN21.g3a in the existing
+  fx-CG50 emulator with .phase1/user-manual/run.script. Newly documented manual
+  section7.6 custom single-D recipe produced Q0=0,0,1 at columns0,1,2; inspected
+  the screenshots. Disabled Q1 and removed synchronous reset as documented.
+  Process exited normally; one trailing scripted key was unused after app exit.
+  Log: .phase1/user-manual/manual-smoke.log; screenshots custom-d-col0/1/2.png.
+- Rendered scripts/build-user-manual.py with bundled Python3.12/ReportLab and
+  installed Arial Unicode.ttf. pypdf extraction verifies all12chapter headings,
+  Chinese text without replacement characters, PDF outlines and all4image paths.
+  Final PDF:31A4pages; rendered every page with Poppler, visually reviewed contact
+  sheets and inspected the final revised timing tables at higher resolution.
+  Tables, steps, Chinese glyphs, screenshots, headers/footers and contents checked.
+- scripts/verify-version-archives.py:PASS,all10recovery archives/manifests/binaries.
+- Current158376byte program SHA256 unchanged:
+  a893609cb6a6757a5b20dbd253495339f3d9c2e6e1a5a13fa7c2ce01480824df.
+
+This is not a fresh app build/full functional regression or physical test. All
+other recipe coverage derives from source review and previously recorded checks;
+no new hardware acceptance, USB verification or M9 coverage is claimed.
+Regenerate:python3 scripts/build-user-manual.py [--font /path/to/CJK.ttf].

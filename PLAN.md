@@ -405,3 +405,14 @@ Local bundle also passed independent clone/restore. Permanent task-start Git,
 branch,commit,engineering/accepted distinction and safe-push rules are inAGENTS.
 All new features remain paused;M9 not started. M5/M6deferred,M7/M8/custom-width
 pending;originalM2A-M4user-reported hardware acceptance retained.
+
+## Chinese complete user manual — documentation-only follow-up
+
+User requested a complete Chinese manual for the current M8 engineering build.
+Delivered docs/USER-MANUAL.zh-CN.md and a printable 31-page PDF under output/pdf/,
+covering all seven tool entries, installation, context-sensitive keys, examples,
+limits, export handling, troubleshooting and separate acceptance states.
+Added four existing genuine emulator screenshots and a reproducible ReportLab
+renderer (Python3 + reportlab + an installed CJK TrueType font; --font override).
+No application source, binary, architecture or milestone acceptance changed.
+M9 remains unapproved; all new feature development remains paused.

@@ -7,6 +7,8 @@ paused for P0 version-control protection;M9 has not started.
 - Current source/tests:[apps/ecen21](apps/ecen21/).
 - Actual user program:[M8 ECEN21.g3a](releases/engineering/M8/ECEN21.g3a),engineering
   verified,not yet an accepted/stable release.
+- [Complete Chinese user manual](docs/USER-MANUAL.zh-CN.md) /
+  [printable PDF](output/pdf/ECEN21-Toolkit-User-Manual-zh-CN-M8.pdf).
 - [Chinese M8 acceptance guide](docs/M8-USER-ACCEPTANCE.zh-CN.md).
 - [Recovered milestone index](version-archives/README.md),[hashes/status](version-archives/index.json).
 - [Version-control/recovery workflow](docs/VERSION-CONTROL.md),[actual test records](TESTING.md).
