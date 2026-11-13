@@ -372,3 +372,36 @@ installed for actual host HDL verification; pinned fxSDK unchanged.
 acceptance pending,M9 unapproved. M7/custom-width acceptance remain pending;
 M5/M6 hardware deferred. Next concrete task is user acceptance/fixes; M9 integrated
 problem workflows need separate approval. No physical calculator/FPGA result claimed.
+
+## P0 local protection result
+
+Created code checkpoint `840a04d5f9ff9669767d87e9b4f4574eb17d38cd` on
+`codex/p0-m8-version-backup`,annotated tag `engineering/m8-recovered-p0`.
+Preserved all60original commits;no old milestone history invented. Current source
+matches all141M8engineering inputs. Ten shared host suites pass;10recovery
+archives all verified/restored into empty directories. Independent Git bundle
+clone also passes archive/source/binary verification. Staged188file scan found
+no credentials after excluding Finder metadata;5push policy checks passed.
+Git fsck passed;working tree clean after code checkpoint. See
+[record](tools/versioning/P0-REPORT.json). Browser reauthentication is pending;
+remote M8 backup is NOT yet claimed. No new features or M9 work.
+
+## P0 authenticated remote backup — verified
+
+Browser OAuth completed asCapt-cai;personal fork Capt-cai/casioCalcApps grantsADMIN.
+Confirmed parentjoserodpt/casioCalcApps;upstream push remainsDISABLED. Origin/main
+was still12d6b4e;atomic ordinary fast-forward push published code checkpoint
+840a04d5f9ff9669767d87e9b4f4574eb17d38cd to personal main and
+codex/p0-m8-version-backup,plusnew annotated engineering/m8-recovered-p0.
+No force,history rewrite,remote work overwrite or upstream push occurred.
+
+Independent fresh GitHub clone verified141current M8source inputs,all10recovery
+archives and the identical158376byte user binary;its SHA256 remains
+`a893609cb6a6757a5b20dbd253495339f3d9c2e6e1a5a13fa7c2ce01480824df`.
+This verifies a real remote backup,not just a push command attempt. P0 report
+metadata follow-up is committed/pushed separately;the M8code checkpoint hash is
+immutable. Earlier401/pending lines describe initial audit,now resolved.
+Local bundle also passed independent clone/restore. Permanent task-start Git,
+branch,commit,engineering/accepted distinction and safe-push rules are inAGENTS.
+All new features remain paused;M9 not started. M5/M6deferred,M7/M8/custom-width
+pending;originalM2A-M4user-reported hardware acceptance retained.

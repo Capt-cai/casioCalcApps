@@ -95,3 +95,13 @@ sidecar identifies the exact included refs/hashes. Remote restore is checked
 independently after successful push. Pinned Docker/emulator external availability
 is separate from Git source/binary recovery;large tool installations are not
 committed as caches.
+
+## Verified P0 outcome
+
+Code checkpoint840a04d5f9ff9669767d87e9b4f4574eb17d38cd is remotely backed up on
+personal main andcodex/p0-m8-version-backup,withtagengineering/m8-recovered-p0.
+Authentication401 was resolved by user-completed GitHub browser OAuth;Capt-cai
+hasADMIN on the personal fork. A fresh independent GitHub clone recovered every
+141M8input,all10archives and the exact user binary. Documentation follow-up
+commits do not alter the immutable code checkpoint. No accepted/stable M8 release
+was created. Current details:tools/versioning/P0-REPORT.json.

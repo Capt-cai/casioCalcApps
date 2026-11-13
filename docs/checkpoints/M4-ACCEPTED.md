@@ -54,3 +54,11 @@ long-run benchmark was supplied; those remain unmeasured. Original reports may
 say 'user acceptance pending' because they record the earlier engineering handoff;
 `acceptance.json` and currentPLAN/PROGRESS/TESTING separately record later closure.
 Historical verification.json/final-review.json are intentionally not rewritten.
+
+## P0 remote-safe recovery mirror
+
+Original accepted source/binary hashes are preserved in `version-archives/m4.tar.gz`
+and its index. The byte-identical legacy bundle remains locally at its original
+path;Finder.DS_Store metadata prevents uploading that raw package. Current remote
+sync is recorded in tools/versioning/P0-REPORT.json,not inferred from the original
+closure record.
